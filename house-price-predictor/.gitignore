@@ -9,3 +9,5 @@ env/
 node_modules/
 .ipynb_checkpoints
 *.pkl
+credentials.json
+token.json

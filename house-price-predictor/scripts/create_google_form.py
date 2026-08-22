@@ -9,21 +9,15 @@ BASE_DIR = Path(__file__).parent.parent
 CREDENTIALS_FILE = BASE_DIR / "credentials.json"
 TOKEN_FILE = BASE_DIR / "token.json"
 
-FORM_TITLE = "Session Feedback — Machine Learning & AI Basics"
-FORM_DESCRIPTION = "Thanks for joining today! Your honest feedback helps me improve — this takes under a minute. Name is optional."
+FORM_TITLE = "LearnDepth™ — Session Feedback: Machine Learning & AI Basics"
+FORM_DESCRIPTION = "Thank you for attending today's LearnDepth™ Live Workshop! Please take 30 seconds to share your quick feedback so we can keep delivering high-impact sessions."
 
 def create_form():
     if not CREDENTIALS_FILE.exists():
         print("\n" + "="*60)
         print("[!] credentials.json NOT FOUND!")
         print("="*60)
-        print("\nTo allow Google Forms API authorization:")
-        print("1. Go to Google Cloud Console: https://console.cloud.google.com/apis/credentials")
-        print("2. Click 'Create Credentials' -> 'OAuth client ID' -> Application type: 'Desktop app'")
-        print("3. Click 'Download JSON', rename the file to 'credentials.json', and save it in:")
-        print(f"   {CREDENTIALS_FILE}")
-        print("\nThen run this script again: python scripts/create_google_form.py")
-        print("="*60 + "\n")
+        print("Please place credentials.json in the project root directory.")
         return None
 
     try:
@@ -53,7 +47,7 @@ def create_form():
             creds.refresh(Request())
         else:
             print("\n[+] Opening browser for Google Forms authorization...")
-            print("Please click 'Allow' in the browser popup window.\n")
+            print("Please sign in and click 'Allow' in the browser window.\n")
             flow = InstalledAppFlow.from_client_secrets_file(str(CREDENTIALS_FILE), SCOPES)
             creds = flow.run_local_server(port=0)
             
@@ -63,7 +57,7 @@ def create_form():
     service = build('forms', 'v1', credentials=creds)
 
     # 1. Create empty form
-    print("📝 Creating Google Form...")
+    print("📝 Creating LearnDepth™ Google Form...")
     form_body = {
         "info": {
             "title": FORM_TITLE,
@@ -72,10 +66,10 @@ def create_form():
     }
     res = service.forms().create(body=form_body).execute()
     form_id = res['formId']
-    print(f"✅ Form created! ID: {form_id}")
+    print(f"SUCCESS: Form created! ID: {form_id}")
 
-    # 2. Add description and questions
-    print("📋 Adding fields and questions...")
+    # 2. Add description and questions (Optimized for <30 sec response time)
+    print("📋 Adding optimized MCQ questions...")
     update_body = {
         "requests": [
             # Update Form Description
@@ -87,26 +81,11 @@ def create_form():
                     "updateMask": "description"
                 }
             },
-            # Q1: Name (optional) - Short Answer
+            # Q1: Overall Session Rating - Scale 1-5
             {
                 "createItem": {
                     "item": {
-                        "title": "Name (optional)",
-                        "questionItem": {
-                            "question": {
-                                "required": False,
-                                "textQuestion": {}
-                            }
-                        }
-                    },
-                    "location": {"index": 0}
-                }
-            },
-            # Q2: Overall Rating - Scale 1-5
-            {
-                "createItem": {
-                    "item": {
-                        "title": "How would you rate today's session overall?",
+                        "title": "1. How would you rate today's LearnDepth™ session overall?",
                         "questionItem": {
                             "question": {
                                 "required": True,
@@ -114,19 +93,19 @@ def create_form():
                                     "low": 1,
                                     "high": 5,
                                     "lowLabel": "Poor",
-                                    "highLabel": "Excellent"
+                                    "highLabel": "Outstanding ⭐"
                                 }
                             }
                         }
                     },
-                    "location": {"index": 1}
+                    "location": {"index": 0}
                 }
             },
-            # Q3: Concept Clarity - Scale 1-5
+            # Q2: Concept Clarity - Scale 1-5
             {
                 "createItem": {
                     "item": {
-                        "title": "How clear was the explanation of ML concepts?",
+                        "title": "2. How clear was the explanation of Machine Learning concepts?",
                         "questionItem": {
                             "question": {
                                 "required": True,
@@ -134,7 +113,29 @@ def create_form():
                                     "low": 1,
                                     "high": 5,
                                     "lowLabel": "Confusing",
-                                    "highLabel": "Very Clear"
+                                    "highLabel": "Super Clear 💡"
+                                }
+                            }
+                        }
+                    },
+                    "location": {"index": 1}
+                }
+            },
+            # Q3: Session Pacing - MCQ
+            {
+                "createItem": {
+                    "item": {
+                        "title": "3. How was the pace of the workshop?",
+                        "questionItem": {
+                            "question": {
+                                "required": True,
+                                "choiceQuestion": {
+                                    "type": "RADIO",
+                                    "options": [
+                                        {"value": "Perfect speed — easy to follow"},
+                                        {"value": "A bit fast in some parts"},
+                                        {"value": "A bit slow — could move faster"}
+                                    ]
                                 }
                             }
                         }
@@ -142,20 +143,20 @@ def create_form():
                     "location": {"index": 2}
                 }
             },
-            # Q4: Live Demo Usefulness - Choice
+            # Q4: Live House Price Predictor Demo - MCQ
             {
                 "createItem": {
                     "item": {
-                        "title": "Did the live demo (house price prediction) help you understand the concepts better?",
+                        "title": "4. Did the live House Price Predictor demo help connect theory to real code?",
                         "questionItem": {
                             "question": {
                                 "required": True,
                                 "choiceQuestion": {
                                     "type": "RADIO",
                                     "options": [
-                                        {"value": "Yes, a lot"},
-                                        {"value": "Somewhat"},
-                                        {"value": "Not really"}
+                                        {"value": "Loved it! Made concepts crystal clear"},
+                                        {"value": "Helpful, but wanted to see more code detail"},
+                                        {"value": "Needs more step-by-step explanation"}
                                     ]
                                 }
                             }
@@ -164,20 +165,20 @@ def create_form():
                     "location": {"index": 3}
                 }
             },
-            # Q5: Audio/Session Quality - Choice
+            # Q5: Audio/Session Quality - MCQ
             {
                 "createItem": {
                     "item": {
-                        "title": "Was the audio/session quality okay throughout?",
+                        "title": "5. Was the audio and stream quality acceptable throughout?",
                         "questionItem": {
                             "question": {
                                 "required": True,
                                 "choiceQuestion": {
                                     "type": "RADIO",
                                     "options": [
-                                        {"value": "Yes, no issues"},
-                                        {"value": "Had some minor issues"},
-                                        {"value": "Significant issues"}
+                                        {"value": "Flawless audio & video"},
+                                        {"value": "Had minor audio/lag glitches"},
+                                        {"value": "Significant technical issues"}
                                     ]
                                 }
                             }
@@ -186,26 +187,35 @@ def create_form():
                     "location": {"index": 4}
                 }
             },
-            # Q6: One thing to improve - Paragraph
+            # Q6: Future Topics - MCQ + Other
             {
                 "createItem": {
                     "item": {
-                        "title": "What's one thing that could be improved?",
+                        "title": "6. What topic would you like LearnDepth™ to cover in our next workshop?",
                         "questionItem": {
                             "question": {
-                                "required": False,
-                                "textQuestion": {"paragraph": True}
+                                "required": True,
+                                "choiceQuestion": {
+                                    "type": "RADIO",
+                                    "options": [
+                                        {"value": "Deep Learning & Neural Networks"},
+                                        {"value": "LLMs, RAG & AI Agents"},
+                                        {"value": "Computer Vision & Image Processing"},
+                                        {"value": "Deploying ML Models to Cloud Production (FastAPI/Docker)"},
+                                        {"isOther": True}
+                                    ]
+                                }
                             }
                         }
                     },
                     "location": {"index": 5}
                 }
             },
-            # Q7: Future Topics - Paragraph
+            # Q7: Open Feedback - Paragraph (Optional)
             {
                 "createItem": {
                     "item": {
-                        "title": "Any topics you'd like covered in a future session?",
+                        "title": "7. Any additional suggestions or thoughts for us? (Optional)",
                         "questionItem": {
                             "question": {
                                 "required": False,
@@ -214,6 +224,21 @@ def create_form():
                         }
                     },
                     "location": {"index": 6}
+                }
+            },
+            # Q8: Name & Contact - Short Answer (Optional)
+            {
+                "createItem": {
+                    "item": {
+                        "title": "Your Name or Email (Optional)",
+                        "questionItem": {
+                            "question": {
+                                "required": False,
+                                "textQuestion": {}
+                            }
+                        }
+                    },
+                    "location": {"index": 7}
                 }
             }
         ]
@@ -232,6 +257,17 @@ def create_form():
     print(f"Share Form URL: {responder_url}")
     print("="*60 + "\n")
     
+    # Auto-update resources.html if available
+    resources_file = BASE_DIR / "resources.html"
+    frontend_resources_file = BASE_DIR / "frontend" / "resources.html"
+    if responder_url and resources_file.exists():
+        content = resources_file.read_text(encoding='utf-8')
+        new_content = content.replace('href="#"', f'href="{responder_url}"')
+        resources_file.write_text(new_content, encoding='utf-8')
+        if frontend_resources_file.exists():
+            frontend_resources_file.write_text(new_content, encoding='utf-8')
+        print(f"✅ Automatically updated resources.html with share URL: {responder_url}")
+
     return responder_url
 
 if __name__ == '__main__':
