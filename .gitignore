@@ -12,11 +12,9 @@ node_modules/
 credentials.json
 token.json
 
-# Cache Folders
-.stitch-mcp/
+# Build & Tool Cache Folders
 .wrangler/
 .astro/
 .cache/
 dist/
 build/
-scratch/
