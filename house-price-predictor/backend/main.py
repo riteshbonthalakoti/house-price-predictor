@@ -106,10 +106,19 @@ INDEX_HTML = FRONTEND_DIR / "index.html"
 
 @app.get("/", response_class=HTMLResponse)
 def serve_ui():
-    """Serve the dashboard UI."""
+    """Serve the dashboard UI or API status."""
     if INDEX_HTML.exists():
         return HTMLResponse(content=INDEX_HTML.read_text(encoding="utf-8"))
-    return HTMLResponse(content="<h1>Frontend not found</h1><p>Place index.html in house-price-predictor/frontend/</p>", status_code=404)
+    return HTMLResponse(content="""
+    <html>
+      <body style="font-family: sans-serif; text-align: center; padding: 40px; background: #F5F7FA;">
+        <h2>⚡ House Price Predictor API</h2>
+        <p>Backend API is live and healthy.</p>
+        <p>Frontend Dashboard: <a href="https://house-price-predictor.pages.dev">https://house-price-predictor.pages.dev</a></p>
+        <p>API Docs: <a href="/docs">/docs</a> | Health Check: <a href="/health">/health</a></p>
+      </body>
+    </html>
+    """, status_code=200)
 
 
 @app.get("/health")
