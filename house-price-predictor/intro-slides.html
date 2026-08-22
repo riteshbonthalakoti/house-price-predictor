@@ -227,7 +227,7 @@
     }
 
     /* ==========================================================================
-       6. SLIDE 4 SPECIFIC STYLES (DEMO PREVIEW)
+       6. SLIDE DEMO SPECIFIC STYLES
        ========================================================================== */
     .slide-demo-layout {
       text-align: center;
@@ -341,7 +341,7 @@
 
   <!-- Header shown only in normal scrollable view -->
   <header class="normal-view-header">
-    <div class="normal-view-title">Slide Deck Preview (4 Slides)</div>
+    <div class="normal-view-title" id="deck-title-badge">Slide Deck Preview (6 Slides)</div>
     <div style="font-size: 14px; color: var(--text-muted);">Press <strong>P</strong> to enter presentation mode</div>
   </header>
 
@@ -447,8 +447,80 @@
       </div>
     </article>
 
-    <!-- SLIDE 4: Demo Preview -->
-    <article class="slide slide-demo-layout" id="slide-4">
+    <!-- SLIDE 4: Linear Regression Core Concept & Math -->
+    <article class="slide" id="slide-4">
+      <h2 class="slide-title" style="font-size: 40px; margin-bottom: 20px;">Linear Regression: Core Intuition</h2>
+      
+      <div class="definition-box" style="margin-bottom: 28px;">
+        <p class="definition-text" style="font-size: 24px;">
+          "Predicting a continuous target value by finding the weighted sum of input features"
+        </p>
+      </div>
+
+      <!-- Math Equation Banner -->
+      <div style="background: var(--text-main); color: #FFFFFF; border-radius: 12px; padding: 22px 28px; text-align: center; font-size: 30px; font-weight: 700; font-family: monospace; letter-spacing: 0.03em; margin-bottom: 28px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+        <span style="color: #60A5FA;">ŷ</span> = <span style="color: #F43F5E;">w₁</span>·size + <span style="color: #F43F5E;">w₂</span>·beds + <span style="color: #F43F5E;">w₃</span>·baths - <span style="color: #F43F5E;">w₄</span>·age + <span style="color: #F43F5E;">w₅</span>·location + <span style="color: #34D399;">b</span>
+      </div>
+
+      <div class="three-cards-grid" style="grid-template-columns: repeat(4, 1fr); gap: 16px;">
+        <div class="concept-card" style="padding: 20px 16px;">
+          <div class="concept-card-title" style="color: #3B82F6; font-size: 20px;">ŷ (Target)</div>
+          <div class="concept-card-desc" style="font-size: 16px;">Predicted house price in Lakhs</div>
+        </div>
+
+        <div class="concept-card" style="padding: 20px 16px;">
+          <div class="concept-card-title" style="color: #10B981; font-size: 20px;">x (Features)</div>
+          <div class="concept-card-desc" style="font-size: 16px;">Inputs (sq ft, beds, age, location)</div>
+        </div>
+
+        <div class="concept-card" style="padding: 20px 16px;">
+          <div class="concept-card-title" style="color: #F43F5E; font-size: 20px;">w (Weights)</div>
+          <div class="concept-card-desc" style="font-size: 16px;">Impact / coefficient of each feature</div>
+        </div>
+
+        <div class="concept-card" style="padding: 20px 16px;">
+          <div class="concept-card-title" style="color: #34D399; font-size: 20px;">b (Intercept)</div>
+          <div class="concept-card-desc" style="font-size: 16px;">Base starting price when features = 0</div>
+        </div>
+      </div>
+    </article>
+
+    <!-- SLIDE 5: How the Model Learns -->
+    <article class="slide" id="slide-5">
+      <h2 class="slide-title" style="font-size: 40px; margin-bottom: 24px;">How the Model Learns & Evaluates</h2>
+
+      <div class="three-cards-grid" style="grid-template-columns: 1fr 1fr; gap: 28px;">
+        <!-- Card 1: Loss Function -->
+        <div class="concept-card" style="padding: 32px 28px; background: var(--bg);">
+          <div class="concept-card-title" style="font-size: 26px; color: var(--accent);">1. Ordinary Least Squares (OLS)</div>
+          <div class="concept-card-desc" style="font-size: 20px; line-height: 1.5; color: var(--text-main);">
+            Finds weights (w) and bias (b) that <strong>minimize total squared error</strong> between actual price (y) and predicted price (ŷ):
+          </div>
+          <div style="background: #FFFFFF; border: 1px solid var(--border); border-radius: 8px; padding: 16px; font-family: monospace; font-size: 20px; font-weight: 700; color: var(--text-main); margin-top: 12px; text-align: center; width: 100%;">
+            Loss = ∑ ( y_actual - y_predicted )²
+          </div>
+        </div>
+
+        <!-- Card 2: Metrics -->
+        <div class="concept-card" style="padding: 32px 28px; background: var(--bg);">
+          <div class="concept-card-title" style="font-size: 26px; color: var(--accent);">2. Evaluation Metrics</div>
+          <div style="display: flex; flex-direction: column; gap: 16px; width: 100%; margin-top: 8px;">
+            <div style="background: #FFFFFF; border: 1px solid var(--border); border-radius: 8px; padding: 14px 18px;">
+              <div style="font-size: 18px; font-weight: 700; color: var(--text-main);">MAE (Mean Absolute Error)</div>
+              <div style="font-size: 16px; color: var(--text-muted);">Average prediction error: <strong>± ₹8.78 Lakhs</strong></div>
+            </div>
+
+            <div style="background: #FFFFFF; border: 1px solid var(--border); border-radius: 8px; padding: 14px 18px;">
+              <div style="font-size: 18px; font-weight: 700; color: var(--text-main);">R² Accuracy Score</div>
+              <div style="font-size: 16px; color: var(--text-muted);">Variance explained: <strong>0.9566 (95.7%)</strong></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <!-- SLIDE 6: Demo Preview -->
+    <article class="slide slide-demo-layout" id="slide-6">
       <div class="demo-icon-box">
         <!-- Scatter plot + Line Icon -->
         <svg viewBox="0 0 200 120" fill="none" stroke-width="3" stroke-linecap="round">
@@ -477,7 +549,7 @@
   </main>
 
   <!-- Slide Counter for Presentation Mode -->
-  <div class="slide-counter" id="slide-counter">1 / 4</div>
+  <div class="slide-counter" id="slide-counter">1 / 6</div>
 
   <!-- Visible Button in Normal Mode -->
   <button id="toggle-pres-btn" onclick="togglePresentationMode()">
@@ -495,16 +567,14 @@
   <script>
     let isPresenting = false;
     let currentSlide = 1;
-    const totalSlides = 4;
 
     const body = document.body;
     const counter = document.getElementById('slide-counter');
-    const slides = [
-      document.getElementById('slide-1'),
-      document.getElementById('slide-2'),
-      document.getElementById('slide-3'),
-      document.getElementById('slide-4')
-    ];
+    const slides = Array.from(document.querySelectorAll('.slide'));
+    const totalSlides = slides.length;
+
+    // Set header badge dynamically
+    document.getElementById('deck-title-badge').textContent = `Slide Deck Preview (${totalSlides} Slides)`;
 
     function updatePresentationState() {
       if (isPresenting) {
@@ -526,11 +596,8 @@
     function togglePresentationMode() {
       isPresenting = !isPresenting;
       if (isPresenting) {
-        // Request fullscreen if supported and permitted
         if (document.documentElement.requestFullscreen) {
-          document.documentElement.requestFullscreen().catch(() => {
-            // Fullscreen API blocked or ignored, fallback to fixed overlay
-          });
+          document.documentElement.requestFullscreen().catch(() => {});
         }
       } else {
         if (document.fullscreenElement && document.exitFullscreen) {
@@ -563,21 +630,18 @@
     window.addEventListener('keydown', (e) => {
       const key = e.key;
 
-      // Toggle Presentation mode on 'p' or 'P'
       if (key === 'p' || key === 'P') {
         e.preventDefault();
         togglePresentationMode();
         return;
       }
 
-      // Exit Presentation mode on Escape
       if (key === 'Escape' && isPresenting) {
         isPresenting = false;
         updatePresentationState();
         return;
       }
 
-      // Navigation keys while presenting
       if (isPresenting) {
         if (key === 'ArrowRight' || key === 'ArrowDown' || key === ' ' || key === 'PageDown') {
           e.preventDefault();
@@ -586,13 +650,6 @@
           e.preventDefault();
           prevSlide();
         }
-      }
-    });
-
-    // Listen for browser fullscreen change events
-    document.addEventListener('fullscreenchange', () => {
-      if (!document.fullscreenElement && isPresenting) {
-        // Optional: keep overlay mode active even if ESC exited native browser fullscreen
       }
     });
   </script>
