@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>House Price Predictor</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="app-container">
+        <header class="hero">
+            <h1>House Price Predictor</h1>
+            <p>Powered by Linear Regression</p>
+        </header>
+
+        <main class="dashboard">
+            <!-- Input Panel -->
+            <section class="panel input-panel">
+                <h2>Property Details</h2>
+                <form id="prediction-form">
+                    <div class="input-group">
+                        <label for="size_sqft">Size (sqft)</label>
+                        <input type="range" id="size_sqft" min="500" max="4000" step="50" value="1500" oninput="this.nextElementSibling.value = this.value">
+                        <output>1500</output>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="bedrooms">Bedrooms</label>
+                        <input type="range" id="bedrooms" min="1" max="6" step="1" value="3" oninput="this.nextElementSibling.value = this.value">
+                        <output>3</output>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="bathrooms">Bathrooms</label>
+                        <input type="range" id="bathrooms" min="1" max="4" step="1" value="2" oninput="this.nextElementSibling.value = this.value">
+                        <output>2</output>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="age_years">Age (years)</label>
+                        <input type="range" id="age_years" min="0" max="40" step="1" value="5" oninput="this.nextElementSibling.value = this.value">
+                        <output>5</output>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="location_score">Location Score (1-10)</label>
+                        <input type="range" id="location_score" min="1" max="10" step="1" value="8" oninput="this.nextElementSibling.value = this.value">
+                        <output>8</output>
+                    </div>
+
+                    <button type="submit" class="predict-btn">Predict Price</button>
+                </form>
+            </section>
+
+            <!-- Results & Insights Panel -->
+            <section class="panel results-panel">
+                <div class="result-display">
+                    <h2>Estimated Value</h2>
+                    <div class="price-box">
+                        <span class="currency">₹</span>
+                        <span id="predicted-price">---</span>
+                        <span class="unit">Lakhs</span>
+                    </div>
+                    <p id="confidence-note" class="note">Awaiting prediction...</p>
+                </div>
+
+                <div class="insights-display">
+                    <h2>Model Insights (Coefficients)</h2>
+                    <canvas id="coefficientsChart"></canvas>
+                </div>
+            </section>
+        </main>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>
