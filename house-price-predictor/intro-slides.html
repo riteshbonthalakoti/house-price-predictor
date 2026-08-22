@@ -447,86 +447,86 @@
       </div>
     </article>
 
-    <!-- SLIDE 4: Linear Regression Key Definitions -->
+    <!-- SLIDE 4: Linear Regression Plain English Definitions -->
     <article class="slide" id="slide-4">
-      <h2 class="slide-title" style="font-size: 42px; margin-bottom: 20px;">Linear Regression — Key Definitions</h2>
+      <h2 class="slide-title" style="font-size: 42px; margin-bottom: 20px;">Linear Regression — The 4 Ingredients</h2>
       
       <div class="definition-box" style="margin-bottom: 28px;">
         <p class="definition-text" style="font-size: 25px;">
-          "Predicting a target number by finding the line of best fit through data points"
+          "Calculating a final estimated number by adding up the value of every input detail"
         </p>
       </div>
 
       <div class="three-cards-grid" style="grid-template-columns: repeat(4, 1fr); gap: 16px;">
-        <!-- Feature -->
+        <!-- Inputs -->
         <div class="concept-card" style="padding: 24px 20px;">
-          <div style="font-size: 14px; font-weight: 700; color: var(--accent); text-transform: uppercase;">Input</div>
-          <div class="concept-card-title" style="font-size: 22px; color: var(--accent);">Feature (X)</div>
-          <div class="concept-card-desc" style="font-size: 16px;">The input variables measured from data (e.g. size, score, duration).</div>
+          <div style="font-size: 14px; font-weight: 700; color: var(--accent); text-transform: uppercase;">1. The Details</div>
+          <div class="concept-card-title" style="font-size: 22px; color: var(--accent);">Inputs</div>
+          <div class="concept-card-desc" style="font-size: 16px;">The facts you give the model (like size, age, or location rating).</div>
         </div>
 
-        <!-- Weight -->
+        <!-- Importance -->
         <div class="concept-card" style="padding: 24px 20px; border-color: var(--accent); background: var(--accent-light);">
-          <div style="font-size: 14px; font-weight: 700; color: var(--accent); text-transform: uppercase;">Multiplier</div>
-          <div class="concept-card-title" style="font-size: 22px; color: var(--text-main);">Weight (W)</div>
-          <div class="concept-card-desc" style="font-size: 16px; color: var(--text-main);">How much each feature increases (+) or decreases (-) the prediction.</div>
+          <div style="font-size: 14px; font-weight: 700; color: var(--accent); text-transform: uppercase;">2. Impact</div>
+          <div class="concept-card-title" style="font-size: 22px; color: var(--text-main);">Importance</div>
+          <div class="concept-card-desc" style="font-size: 16px; color: var(--text-main);">How much money each detail adds (+) or subtracts (-) from the total.</div>
         </div>
 
-        <!-- Intercept -->
+        <!-- Starting Base -->
         <div class="concept-card" style="padding: 24px 20px;">
-          <div style="font-size: 14px; font-weight: 700; color: #8B5CF6; text-transform: uppercase;">Baseline</div>
-          <div class="concept-card-title" style="font-size: 22px; color: #8B5CF6;">Intercept (B)</div>
-          <div class="concept-card-desc" style="font-size: 16px;">The base starting value when all input features equal zero.</div>
+          <div style="font-size: 14px; font-weight: 700; color: #8B5CF6; text-transform: uppercase;">3. Base</div>
+          <div class="concept-card-title" style="font-size: 22px; color: #8B5CF6;">Starting Price</div>
+          <div class="concept-card-desc" style="font-size: 16px;">The minimum baseline value before adding any specific details.</div>
         </div>
 
-        <!-- Target -->
+        <!-- Final Result -->
         <div class="concept-card" style="padding: 24px 20px;">
-          <div style="font-size: 14px; font-weight: 700; color: #10B981; text-transform: uppercase;">Output</div>
-          <div class="concept-card-title" style="font-size: 22px; color: #10B981;">Target (Y)</div>
-          <div class="concept-card-desc" style="font-size: 16px;">The continuous numerical result we are trying to predict.</div>
+          <div style="font-size: 14px; font-weight: 700; color: #10B981; text-transform: uppercase;">4. Answer</div>
+          <div class="concept-card-title" style="font-size: 22px; color: #10B981;">Final Estimate</div>
+          <div class="concept-card-desc" style="font-size: 16px;">The final predicted number the model calculates for you.</div>
         </div>
       </div>
 
       <div class="closing-banner" style="margin-top: 28px; background: var(--bg); color: var(--text-main); border: 1px solid var(--border); font-size: 22px; font-weight: 500;">
-        📌 <strong>Formula:</strong> Prediction (Y) = (Weight₁ × Feature₁) + (Weight₂ × Feature₂) + ... + Intercept
+        💡 <strong>Plain English Idea:</strong> Final Estimate = Starting Price + (Detail 1 × Impact) + (Detail 2 × Impact)
       </div>
     </article>
 
-    <!-- SLIDE 5: Model Training & Metric Definitions -->
+    <!-- SLIDE 5: How The Computer Learns Plain English -->
     <article class="slide" id="slide-5">
-      <h2 class="slide-title" style="font-size: 42px; margin-bottom: 24px;">Training & Evaluation Definitions</h2>
+      <h2 class="slide-title" style="font-size: 42px; margin-bottom: 24px;">How The Model Learns & Tests Itself</h2>
 
       <div class="three-cards-grid" style="grid-template-columns: 1fr 1fr; gap: 28px;">
-        <!-- Card 1: Training & Loss -->
+        <!-- Card 1: How it learns -->
         <div class="concept-card" style="padding: 32px 28px; background: var(--bg);">
-          <div class="concept-card-title" style="font-size: 26px; color: var(--accent);">Model Training Definitions</div>
+          <div class="concept-card-title" style="font-size: 26px; color: var(--accent);">1. How It Learns (Practice)</div>
           
           <div style="display: flex; flex-direction: column; gap: 16px; width: 100%; margin-top: 12px;">
             <div style="background: #FFFFFF; border: 1px solid var(--border); border-radius: 8px; padding: 16px 20px;">
-              <div style="font-size: 18px; font-weight: 700; color: var(--text-main);">Model Training</div>
-              <div style="font-size: 16px; color: var(--text-muted); margin-top: 4px;">The process where the algorithm automatically finds the best Weights (W) and Intercept (B) from historical data.</div>
+              <div style="font-size: 18px; font-weight: 700; color: var(--text-main);">Looking at Examples</div>
+              <div style="font-size: 16px; color: var(--text-muted); margin-top: 4px;">The computer studies hundreds of past examples where the real answer is already known.</div>
             </div>
 
             <div style="background: #FFFFFF; border: 1px solid var(--border); border-radius: 8px; padding: 16px 20px;">
-              <div style="font-size: 18px; font-weight: 700; color: var(--text-main);">Loss Function (MSE)</div>
-              <div style="font-size: 16px; color: var(--text-muted); margin-top: 4px;">Measures total prediction error. The algorithm works to minimize this error to fit the line.</div>
+              <div style="font-size: 18px; font-weight: 700; color: var(--text-main);">Reducing Errors</div>
+              <div style="font-size: 16px; color: var(--text-muted); margin-top: 4px;">It keeps adjusting the importance of each detail until its guesses are as close to reality as possible.</div>
             </div>
           </div>
         </div>
 
         <!-- Card 2: Performance metrics -->
         <div class="concept-card" style="padding: 32px 28px; background: var(--bg);">
-          <div class="concept-card-title" style="font-size: 26px; color: #10B981;">Metric Definitions</div>
+          <div class="concept-card-title" style="font-size: 26px; color: #10B981;">2. How We Test It (Accuracy Check)</div>
           
           <div style="display: flex; flex-direction: column; gap: 16px; width: 100%; margin-top: 12px;">
             <div style="background: #FFFFFF; border: 1px solid var(--border); border-radius: 8px; padding: 16px 20px;">
-              <div style="font-size: 18px; font-weight: 700; color: var(--text-main);">MAE (Mean Absolute Error)</div>
-              <div style="font-size: 16px; color: var(--text-muted); margin-top: 4px;">The average numerical distance between predictions and actual true values.</div>
+              <div style="font-size: 18px; font-weight: 700; color: var(--text-main);">Checking New Examples</div>
+              <div style="font-size: 16px; color: var(--text-muted); margin-top: 4px;">We test the model on brand new data it has never seen before to make sure it didn't just memorize.</div>
             </div>
 
             <div style="background: #FFFFFF; border: 1px solid var(--border); border-radius: 8px; padding: 16px 20px;">
-              <div style="font-size: 18px; font-weight: 700; color: var(--text-main);">R² Score (Accuracy)</div>
-              <div style="font-size: 16px; color: var(--text-muted); margin-top: 4px;">Percentage of target variation explained by the model line (ranges from 0.0 to 1.0).</div>
+              <div style="font-size: 18px; font-weight: 700; color: var(--text-main);">Scoring Accuracy</div>
+              <div style="font-size: 16px; color: var(--text-muted); margin-top: 4px;">We measure how far off its guesses were on average to calculate an overall accuracy score.</div>
             </div>
           </div>
         </div>
