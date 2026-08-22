@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Machine Learning & AI Basics — Session Resources</title>
+  <meta name="description" content="Resources, links, slides, and source code from today's live Machine Learning & AI training session." />
+
+  <!-- Google Fonts: Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <!-- Material Symbols -->
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --bg: #F5F7FA;
+      --surface: rgba(255, 255, 255, 0.78);
+      --surface-solid: #FFFFFF;
+      --border: rgba(226, 232, 240, 0.8);
+      --border-highlight: rgba(79, 70, 229, 0.2);
+      --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.03);
+      --shadow-md: 0 10px 30px rgba(0, 0, 0, 0.04), 0 1px 4px rgba(0, 0, 0, 0.02);
+      --shadow-hover: 0 16px 36px rgba(79, 70, 229, 0.08), 0 4px 12px rgba(0, 0, 0, 0.03);
+      --primary: #4F46E5;
+      --primary-hover: #4338CA;
+      --primary-light: #EEF2FF;
+      --text: #0F172A;
+      --text-muted: #64748B;
+      --text-light: #94A3B8;
+      --radius-lg: 16px;
+      --radius-md: 12px;
+      --radius-sm: 8px;
+    }
+
+    body {
+      min-height: 100vh;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+      padding: 48px 24px 80px;
+    }
+
+    /* Ambient background gradient spots */
+    .bg-ambient {
+      position: fixed;
+      inset: 0;
+      overflow: hidden;
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    .bg-blob-1 {
+      position: absolute;
+      top: -120px;
+      left: -100px;
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, rgba(79, 70, 229, 0.07) 0%, rgba(245, 247, 250, 0) 70%);
+      border-radius: 50%;
+    }
+
+    .bg-blob-2 {
+      position: absolute;
+      bottom: -150px;
+      right: -100px;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(5, 150, 105, 0.06) 0%, rgba(245, 247, 250, 0) 70%);
+      border-radius: 50%;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    /* Header */
+    .header {
+      margin-bottom: 40px;
+      text-align: left;
+    }
+
+    .header-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      border-radius: 999px;
+      background: var(--primary-light);
+      color: var(--primary);
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 16px;
+      border: 1px solid rgba(79, 70, 229, 0.15);
+    }
+
+    .header-badge .material-symbols-outlined {
+      font-size: 16px;
+    }
+
+    .title {
+      font-size: 36px;
+      font-weight: 800;
+      color: var(--text);
+      letter-spacing: -0.025em;
+      line-height: 1.25;
+      margin-bottom: 12px;
+    }
+
+    .subtitle {
+      font-size: 18px;
+      color: var(--text-muted);
+      font-weight: 500;
+      max-width: 680px;
+    }
+
+    /* Resources List Grid */
+    .resources-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      margin-bottom: 48px;
+    }
+
+    /* Resource Glass Card */
+    .card {
+      background: var(--surface);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-md);
+      padding: 28px 32px;
+      display: flex;
+      align-items: flex-start;
+      gap: 24px;
+      text-decoration: none;
+      color: inherit;
+      transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.2s, border-color 0.2s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-hover);
+      border-color: var(--border-highlight);
+      background: rgba(255, 255, 255, 0.92);
+    }
+
+    .card-icon-box {
+      width: 52px;
+      height: 52px;
+      border-radius: var(--radius-md);
+      background: var(--primary-light);
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .card-icon-box .material-symbols-outlined {
+      font-size: 26px;
+    }
+
+    .card-content {
+      flex: 1;
+    }
+
+    .card-tag {
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--primary);
+      margin-bottom: 4px;
+    }
+
+    .card-title {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .card-title .material-symbols-outlined {
+      font-size: 18px;
+      color: var(--text-light);
+      transition: color 0.2s, transform 0.2s;
+    }
+
+    .card:hover .card-title .material-symbols-outlined {
+      color: var(--primary);
+      transform: translate(2px, -2px);
+    }
+
+    .card-desc {
+      font-size: 15px;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    /* Closing Note Box */
+    .closing-card {
+      background: var(--surface-solid);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-md);
+      padding: 36px 40px;
+      position: relative;
+    }
+
+    .closing-card-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .closing-card-title {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .closing-text {
+      font-size: 16px;
+      color: var(--text-muted);
+      line-height: 1.7;
+    }
+
+    /* Footer */
+    .footer {
+      margin-top: 48px;
+      text-align: center;
+      font-size: 14px;
+      color: var(--text-light);
+    }
+
+    /* Responsive */
+    @media (max-width: 640px) {
+      body {
+        padding: 32px 16px 60px;
+      }
+      .title {
+        font-size: 28px;
+      }
+      .card {
+        padding: 24px 20px;
+        flex-direction: column;
+        gap: 16px;
+      }
+      .closing-card {
+        padding: 28px 24px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="bg-ambient">
+    <div class="bg-blob-1"></div>
+    <div class="bg-blob-2"></div>
+  </div>
+
+  <div class="container">
+
+    <!-- Header -->
+    <header class="header">
+      <div class="header-badge">
+        <span class="material-symbols-outlined">auto_awesome</span>
+        Live Workshop Companion
+      </div>
+      <h1 class="title">Machine Learning & AI Basics — Session Resources</h1>
+      <p class="subtitle">Thanks for attending! Everything from today's session is organized below for you to revisit, practice, or fork.</p>
+    </header>
+
+    <!-- Resources Section -->
+    <main class="resources-grid">
+
+      <!-- Section 1: Slides -->
+      <a href="intro-slides.html" class="card">
+        <div class="card-icon-box">
+          <span class="material-symbols-outlined">slideshow</span>
+        </div>
+        <div class="card-content">
+          <div class="card-tag">Section 1 — Theory</div>
+          <div class="card-title">
+            Theory Slides (ML Basics, Types, AI Domains)
+            <span class="material-symbols-outlined">open_in_new</span>
+          </div>
+          <div class="card-desc">The introductory slide deck covering ML definitions, Supervised vs Unsupervised learning, Predictive vs Generative vs Agentic AI, and Linear Regression core concepts.</div>
+        </div>
+      </a>
+
+      <!-- Section 2: Live Demo -->
+      <a href="https://house-price-predictor.pages.dev" target="_blank" rel="noopener noreferrer" class="card">
+        <div class="card-icon-box">
+          <span class="material-symbols-outlined">rocket_launch</span>
+        </div>
+        <div class="card-content">
+          <div class="card-tag">Section 2 — Live Demo</div>
+          <div class="card-title">
+            Live Web App — Try It Yourself
+            <span class="material-symbols-outlined">open_in_new</span>
+          </div>
+          <div class="card-desc">A working house price prediction app we built live today — try changing property size, bedrooms, age, and neighborhood score to see valuations in real time.</div>
+        </div>
+      </a>
+
+      <!-- Section 3: Source Code -->
+      <a href="https://github.com/riteshbonthalakoti/house-price-predictor" target="_blank" rel="noopener noreferrer" class="card">
+        <div class="card-icon-box">
+          <span class="material-symbols-outlined">code</span>
+        </div>
+        <div class="card-content">
+          <div class="card-tag">Section 3 — Repository</div>
+          <div class="card-title">
+            Full GitHub Source Code
+            <span class="material-symbols-outlined">open_in_new</span>
+          </div>
+          <div class="card-desc">Full source code — data generation scripts, model training, FastAPI backend, and light glassmorphism frontend, all open for you to study or fork.</div>
+        </div>
+      </a>
+
+      <!-- Section 4: Training Notebook -->
+      <a href="https://colab.research.google.com/github/riteshbonthalakoti/house-price-predictor/blob/master/model/train.ipynb" target="_blank" rel="noopener noreferrer" class="card">
+        <div class="card-icon-box">
+          <span class="material-symbols-outlined">terminal</span>
+        </div>
+        <div class="card-content">
+          <div class="card-tag">Section 4 — Interactive Code</div>
+          <div class="card-title">
+            Model Training Notebook (Google Colab)
+            <span class="material-symbols-outlined">open_in_new</span>
+          </div>
+          <div class="card-desc">The actual notebook used to train the model — walk through it step by step to see exactly how dataset generation, model fitting, and Hugging Face uploading work.</div>
+        </div>
+      </a>
+
+      <!-- Section 5: Trained Model -->
+      <a href="https://huggingface.co/ritesh1918/house-price-predictor" target="_blank" rel="noopener noreferrer" class="card">
+        <div class="card-icon-box">
+          <span class="material-symbols-outlined">smart_toy</span>
+        </div>
+        <div class="card-content">
+          <div class="card-tag">Section 5 — Model Hub</div>
+          <div class="card-title">
+            Trained Model Artifacts (Hugging Face)
+            <span class="material-symbols-outlined">open_in_new</span>
+          </div>
+          <div class="card-desc">The trained model itself, hosted on Hugging Face, complete with feature name mapping files and verification performance metrics (R², MAE, RMSE).</div>
+        </div>
+      </a>
+
+      <!-- Section 6: Feedback -->
+      <a href="#" target="_blank" rel="noopener noreferrer" class="card">
+        <div class="card-icon-box" style="background: #FDF2F8; color: #DB2777;">
+          <span class="material-symbols-outlined">rate_review</span>
+        </div>
+        <div class="card-content">
+          <div class="card-tag" style="color: #DB2777;">Section 6 — Your Input</div>
+          <div class="card-title">
+            Session Feedback Form
+            <span class="material-symbols-outlined">open_in_new</span>
+          </div>
+          <div class="card-desc">If you haven't already, please share honest feedback — it takes under a minute and genuinely helps improve future sessions.</div>
+        </div>
+      </a>
+
+    </main>
+
+    <!-- Section 7: Closing Note -->
+    <section class="closing-card">
+      <div class="closing-card-header">
+        <span class="material-symbols-outlined" style="color: var(--primary); font-size: 24px;">favorite</span>
+        <h2 class="closing-card-title">A Quick Note From Me</h2>
+      </div>
+      <p class="closing-text">
+        Thank you so much for taking the time to join today's session! We covered a ton of ground fast — from high-level AI concepts to training a Linear Regression model from scratch and deploying it live. Don't worry if it felt like a lot to absorb all at once. Take your time to explore the notebook and play around with the code at your own pace. If you get stuck, have questions, or build something cool with it, feel free to reach out. Happy coding!
+      </p>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <p>Built with ❤️ for student developers • ProphecyAI ML Demo</p>
+    </footer>
+
+  </div>
+
+</body>
+</html>
