@@ -62,7 +62,6 @@ Synthetic Data (300 rows)
 | Frontend | Vanilla HTML/CSS/JS — zero frameworks |
 | Frontend hosting | Cloudflare Pages |
 | CI/CD | GitHub Actions (keep-warm ping every 10 min) |
-| IDE | [Antigravity IDE](https://antigravity.dev) |
 
 ---
 
@@ -187,5 +186,3 @@ house-price-predictor/
 ## 🤝 About
 
 Built as a **live teaching demo** for a session on Machine Learning fundamentals — specifically to explain Linear Regression by building something real and deployed, not just a notebook exercise.
-
-Built with ❤️ using [Antigravity IDE](https://antigravity.dev) by Google DeepMind.
