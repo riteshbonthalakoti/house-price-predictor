@@ -57,7 +57,7 @@ def create_form():
     service = build('forms', 'v1', credentials=creds)
 
     # 1. Create empty form
-    print("📝 Creating LearnDepth™ Google Form...")
+    print("[+] Creating LearnDepth Google Form...")
     form_body = {
         "info": {
             "title": FORM_TITLE,
@@ -69,7 +69,7 @@ def create_form():
     print(f"SUCCESS: Form created! ID: {form_id}")
 
     # 2. Add description and questions (Optimized for <30 sec response time)
-    print("📋 Adding optimized MCQ questions...")
+    print("[+] Adding optimized MCQ questions...")
     update_body = {
         "requests": [
             # Update Form Description
@@ -266,7 +266,7 @@ def create_form():
         resources_file.write_text(new_content, encoding='utf-8')
         if frontend_resources_file.exists():
             frontend_resources_file.write_text(new_content, encoding='utf-8')
-        print(f"✅ Automatically updated resources.html with share URL: {responder_url}")
+        print(f"[+] Automatically updated resources.html with share URL: {responder_url}")
 
     return responder_url
 
