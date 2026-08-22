@@ -447,75 +447,86 @@
       </div>
     </article>
 
-    <!-- SLIDE 4: Linear Regression Simplified -->
+    <!-- SLIDE 4: Linear Regression Key Definitions -->
     <article class="slide" id="slide-4">
-      <h2 class="slide-title" style="font-size: 42px; margin-bottom: 20px;">Linear Regression — The Simple Idea</h2>
+      <h2 class="slide-title" style="font-size: 42px; margin-bottom: 20px;">Linear Regression — Key Definitions</h2>
       
-      <div class="definition-box" style="margin-bottom: 32px;">
-        <p class="definition-text" style="font-size: 26px;">
-          "Drawing the best-fit straight line through data points to predict numbers"
+      <div class="definition-box" style="margin-bottom: 28px;">
+        <p class="definition-text" style="font-size: 25px;">
+          "Predicting a target number by finding the line of best fit through data points"
         </p>
       </div>
 
-      <div class="three-cards-grid" style="grid-template-columns: repeat(3, 1fr); gap: 24px;">
-        <!-- Step 1: Input -->
-        <div class="concept-card" style="padding: 28px 24px;">
-          <div style="font-size: 16px; font-weight: 700; color: var(--accent); text-transform: uppercase; letter-spacing: 0.05em;">Step 1 — Inputs</div>
-          <div class="concept-card-title" style="font-size: 24px;">Property Features</div>
-          <div class="concept-card-desc" style="font-size: 18px;">Size, Bedrooms, Bathrooms, Age & Location score</div>
+      <div class="three-cards-grid" style="grid-template-columns: repeat(4, 1fr); gap: 16px;">
+        <!-- Feature -->
+        <div class="concept-card" style="padding: 24px 20px;">
+          <div style="font-size: 14px; font-weight: 700; color: var(--accent); text-transform: uppercase;">Input</div>
+          <div class="concept-card-title" style="font-size: 22px; color: var(--accent);">Feature (X)</div>
+          <div class="concept-card-desc" style="font-size: 16px;">The input variables measured from data (e.g. size, score, duration).</div>
         </div>
 
-        <!-- Step 2: Formula -->
-        <div class="concept-card" style="padding: 28px 24px; border-color: var(--accent); background: var(--accent-light);">
-          <div style="font-size: 16px; font-weight: 700; color: var(--accent); text-transform: uppercase; letter-spacing: 0.05em;">Step 2 — Learned Rules</div>
-          <div class="concept-card-title" style="font-size: 24px;">Weighted Sum</div>
-          <div class="concept-card-desc" style="font-size: 18px; color: var(--text-main);">
-            Each feature adds or subtracts value based on learned market weights
-          </div>
+        <!-- Weight -->
+        <div class="concept-card" style="padding: 24px 20px; border-color: var(--accent); background: var(--accent-light);">
+          <div style="font-size: 14px; font-weight: 700; color: var(--accent); text-transform: uppercase;">Multiplier</div>
+          <div class="concept-card-title" style="font-size: 22px; color: var(--text-main);">Weight (W)</div>
+          <div class="concept-card-desc" style="font-size: 16px; color: var(--text-main);">How much each feature increases (+) or decreases (-) the prediction.</div>
         </div>
 
-        <!-- Step 3: Output -->
-        <div class="concept-card" style="padding: 28px 24px;">
-          <div style="font-size: 16px; font-weight: 700; color: #10B981; text-transform: uppercase; letter-spacing: 0.05em;">Step 3 — Output</div>
-          <div class="concept-card-title" style="font-size: 24px;">Predicted Price</div>
-          <div class="concept-card-desc" style="font-size: 18px;">Instant valuation in <strong>₹ Lakhs</strong></div>
+        <!-- Intercept -->
+        <div class="concept-card" style="padding: 24px 20px;">
+          <div style="font-size: 14px; font-weight: 700; color: #8B5CF6; text-transform: uppercase;">Baseline</div>
+          <div class="concept-card-title" style="font-size: 22px; color: #8B5CF6;">Intercept (B)</div>
+          <div class="concept-card-desc" style="font-size: 16px;">The base starting value when all input features equal zero.</div>
+        </div>
+
+        <!-- Target -->
+        <div class="concept-card" style="padding: 24px 20px;">
+          <div style="font-size: 14px; font-weight: 700; color: #10B981; text-transform: uppercase;">Output</div>
+          <div class="concept-card-title" style="font-size: 22px; color: #10B981;">Target (Y)</div>
+          <div class="concept-card-desc" style="font-size: 16px;">The continuous numerical result we are trying to predict.</div>
         </div>
       </div>
 
-      <div class="closing-banner" style="margin-top: 32px; background: var(--bg); color: var(--text-main); border: 1px solid var(--border); font-size: 22px; font-weight: 500;">
-        💡 <strong>Intuition:</strong> Bigger size (+₹) and prime location (+₹) increase price, while older age (-₹) reduces it.
+      <div class="closing-banner" style="margin-top: 28px; background: var(--bg); color: var(--text-main); border: 1px solid var(--border); font-size: 22px; font-weight: 500;">
+        📌 <strong>Formula:</strong> Prediction (Y) = (Weight₁ × Feature₁) + (Weight₂ × Feature₂) + ... + Intercept
       </div>
     </article>
 
-    <!-- SLIDE 5: How Model Learns & Evaluates Simplified -->
+    <!-- SLIDE 5: Model Training & Metric Definitions -->
     <article class="slide" id="slide-5">
-      <h2 class="slide-title" style="font-size: 42px; margin-bottom: 24px;">How We Check If It Works</h2>
+      <h2 class="slide-title" style="font-size: 42px; margin-bottom: 24px;">Training & Evaluation Definitions</h2>
 
-      <div class="three-cards-grid" style="grid-template-columns: 1fr 1fr; gap: 32px;">
-        <!-- Card 1: How it learns -->
-        <div class="concept-card" style="padding: 36px 32px; background: var(--bg);">
-          <div class="concept-card-title" style="font-size: 28px; color: var(--accent);">1. How the Model Learns</div>
-          <div class="concept-card-desc" style="font-size: 22px; line-height: 1.5; color: var(--text-main); margin-top: 8px;">
-            The algorithm adjusts feature weights automatically to make prediction error as small as possible.
-          </div>
-          <div style="margin-top: 20px; font-size: 18px; color: var(--text-muted); background: #FFFFFF; padding: 14px 18px; border-radius: 8px; border: 1px solid var(--border);">
-            🎯 <strong>Goal:</strong> Line passes as close to all 300 house data points as possible.
+      <div class="three-cards-grid" style="grid-template-columns: 1fr 1fr; gap: 28px;">
+        <!-- Card 1: Training & Loss -->
+        <div class="concept-card" style="padding: 32px 28px; background: var(--bg);">
+          <div class="concept-card-title" style="font-size: 26px; color: var(--accent);">Model Training Definitions</div>
+          
+          <div style="display: flex; flex-direction: column; gap: 16px; width: 100%; margin-top: 12px;">
+            <div style="background: #FFFFFF; border: 1px solid var(--border); border-radius: 8px; padding: 16px 20px;">
+              <div style="font-size: 18px; font-weight: 700; color: var(--text-main);">Model Training</div>
+              <div style="font-size: 16px; color: var(--text-muted); margin-top: 4px;">The process where the algorithm automatically finds the best Weights (W) and Intercept (B) from historical data.</div>
+            </div>
+
+            <div style="background: #FFFFFF; border: 1px solid var(--border); border-radius: 8px; padding: 16px 20px;">
+              <div style="font-size: 18px; font-weight: 700; color: var(--text-main);">Loss Function (MSE)</div>
+              <div style="font-size: 16px; color: var(--text-muted); margin-top: 4px;">Measures total prediction error. The algorithm works to minimize this error to fit the line.</div>
+            </div>
           </div>
         </div>
 
         <!-- Card 2: Performance metrics -->
-        <div class="concept-card" style="padding: 36px 32px; background: var(--bg);">
-          <div class="concept-card-title" style="font-size: 28px; color: #10B981;">2. Model Accuracy Results</div>
+        <div class="concept-card" style="padding: 32px 28px; background: var(--bg);">
+          <div class="concept-card-title" style="font-size: 26px; color: #10B981;">Metric Definitions</div>
           
-          <div style="display: flex; flex-direction: column; gap: 16px; width: 100%; margin-top: 16px;">
+          <div style="display: flex; flex-direction: column; gap: 16px; width: 100%; margin-top: 12px;">
             <div style="background: #FFFFFF; border: 1px solid var(--border); border-radius: 8px; padding: 16px 20px;">
-              <div style="font-size: 20px; font-weight: 700; color: var(--text-main);">Average Prediction Error</div>
-              <div style="font-size: 26px; font-weight: 800; color: var(--accent); margin-top: 4px;">± ₹8.78 Lakhs</div>
+              <div style="font-size: 18px; font-weight: 700; color: var(--text-main);">MAE (Mean Absolute Error)</div>
+              <div style="font-size: 16px; color: var(--text-muted); margin-top: 4px;">The average numerical distance between predictions and actual true values.</div>
             </div>
 
             <div style="background: #FFFFFF; border: 1px solid var(--border); border-radius: 8px; padding: 16px 20px;">
-              <div style="font-size: 20px; font-weight: 700; color: var(--text-main);">Overall Accuracy Score</div>
-              <div style="font-size: 26px; font-weight: 800; color: #10B981; margin-top: 4px;">95.7% (R² = 0.9566)</div>
+              <div style="font-size: 18px; font-weight: 700; color: var(--text-main);">R² Score (Accuracy)</div>
+              <div style="font-size: 16px; color: var(--text-muted); margin-top: 4px;">Percentage of target variation explained by the model line (ranges from 0.0 to 1.0).</div>
             </div>
           </div>
         </div>
