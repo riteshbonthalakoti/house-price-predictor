@@ -1,297 +1,174 @@
 ---
+import '../styles/global.css';
 ---
 
-<html class="dark" lang="en"><head>
+<html lang="en"><head>
 <meta charset="utf-8" />
 <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-<title>ProphecyAI - House Price Predictor</title>
-<script src="/assets/03ba5d9f9e95fc3599acebcbe7e5fb9a.js" is:inline="" />
+<title>ProphecyAI — Property Valuation Model</title>
+<meta name="description" content="AI-powered real estate price prediction. Adjust property parameters and get an instant market valuation." />
+<link rel="icon" type="image/jpeg" href="/favicon.ico" />
+<!-- Material Symbols -->
 <link href="/assets/a39f5c6fcbb87b419667ec984d2e579a.css" rel="stylesheet" />
-<link href="/assets/0c6ec1a12c791c783fe83d43e2b782f8.css" rel="stylesheet" />
-<link href="/assets/a39f5c6fcbb87b419667ec984d2e579a.css" rel="stylesheet" />
-<script id="tailwind-config">
-        tailwind.config = {
-            darkMode: "class",
-            theme: {
-                extend: {
-                    colors: {
-                        "on-secondary": "#003824",
-                        "on-primary-fixed-variant": "#004e5c",
-                        "tertiary-container": "#78a5ff",
-                        "surface-container": "#191f2f",
-                        "on-error": "#690005",
-                        "secondary-fixed-dim": "#4edea3",
-                        "error-container": "#93000a",
-                        "error": "#ffb4ab",
-                        "inverse-primary": "#00687a",
-                        "surface-container-highest": "#2f3445",
-                        "surface-container-low": "#151b2b",
-                        "tertiary-fixed-dim": "#adc6ff",
-                        "secondary-container": "#00a572",
-                        "on-secondary-fixed": "#002113",
-                        "background": "#0d1322",
-                        "primary-container": "#06b6d4",
-                        "on-primary-fixed": "#001f26",
-                        "surface-dim": "#0d1322",
-                        "tertiary": "#adc6ff",
-                        "primary-fixed": "#acedff",
-                        "on-tertiary-fixed-variant": "#004395",
-                        "on-background": "#dde2f8",
-                        "surface-container-lowest": "#080e1d",
-                        "secondary": "#4edea3",
-                        "tertiary-fixed": "#d8e2ff",
-                        "primary-fixed-dim": "#4cd7f6",
-                        "surface-bright": "#33394a",
-                        "on-primary-container": "#00424f",
-                        "on-secondary-fixed-variant": "#005236",
-                        "surface-container-high": "#242a3a",
-                        "on-surface": "#dde2f8",
-                        "on-secondary-container": "#00311f",
-                        "primary": "#4cd7f6",
-                        "on-surface-variant": "#bcc9cd",
-                        "on-tertiary-container": "#00397f",
-                        "surface-variant": "#2f3445",
-                        "inverse-on-surface": "#2a3040",
-                        "on-error-container": "#ffdad6",
-                        "outline": "#869397",
-                        "on-primary": "#003640",
-                        "inverse-surface": "#dde2f8",
-                        "on-tertiary-fixed": "#001a42",
-                        "outline-variant": "#3d494c",
-                        "surface": "#0d1322",
-                        "on-tertiary": "#002e6a",
-                        "surface-tint": "#4cd7f6",
-                        "secondary-fixed": "#6ffbbe"
-                    },
-                    borderRadius: {
-                        "DEFAULT": "0.25rem",
-                        "lg": "0.5rem",
-                        "xl": "0.75rem",
-                        "full": "9999px"
-                    },
-                    spacing: {
-                        "base": "8px",
-                        "xl": "64px",
-                        "sm": "12px",
-                        "lg": "40px",
-                        "margin-desktop": "48px",
-                        "xs": "4px",
-                        "margin-mobile": "20px",
-                        "md": "24px",
-                        "gutter": "16px"
-                    },
-                    fontFamily: {
-                        "label-md": ["Inter"],
-                        "display-lg": ["Inter"],
-                        "headline-lg": ["Inter"],
-                        "display-lg-mobile": ["Inter"],
-                        "label-sm": ["Inter"],
-                        "headline-md": ["Inter"],
-                        "body-lg": ["Inter"],
-                        "headline-lg-mobile": ["Inter"],
-                        "body-md": ["Inter"]
-                    },
-                    fontSize: {
-                        "label-md": ["14px", { lineHeight: "20px", letterSpacing: "0.01em", fontWeight: "500" }],
-                        "display-lg": ["48px", { lineHeight: "56px", letterSpacing: "-0.02em", fontWeight: "700" }],
-                        "headline-lg": ["32px", { lineHeight: "40px", letterSpacing: "-0.01em", fontWeight: "700" }],
-                        "display-lg-mobile": ["36px", { lineHeight: "44px", fontWeight: "700" }],
-                        "label-sm": ["12px", { lineHeight: "16px", fontWeight: "600" }],
-                        "headline-md": ["24px", { lineHeight: "32px", fontWeight: "600" }],
-                        "body-lg": ["18px", { lineHeight: "28px", fontWeight: "400" }],
-                        "headline-lg-mobile": ["28px", { lineHeight: "36px", fontWeight: "700" }],
-                        "body-md": ["16px", { lineHeight: "24px", fontWeight: "400" }]
-                    }
-                }
-            }
-        }
-    </script>
-<style type="text/tailwindcss">
-        @layer utilities {
-            .glass-panel {
-                @apply bg-white/10 backdrop-blur-[12px] border-[0.5px] border-white/20 rounded-xl;
-            }
-            .glass-input {
-                @apply bg-white/5 border-[0.5px] border-white/20 rounded-lg text-on-surface focus:border-primary focus:ring-1 focus:ring-primary focus:outline-none transition-colors;
-            }
-            .primary-gradient-btn {
-                @apply bg-gradient-to-tr from-primary to-secondary text-on-secondary font-label-md uppercase tracking-wider rounded-lg shadow-[0_0_15px_rgba(6,182,212,0.5)] hover:shadow-[0_0_25px_rgba(6,182,212,0.7)] transition-all duration-300;
-            }
-            .text-glow {
-                text-shadow: 0 0 20px rgba(76, 215, 246, 0.6);
-            }
-        }
-        
-        /* Custom Slider Styling */
-        input[type=range] {
-            -webkit-appearance: none;
-            @apply w-full h-1 bg-white/20 rounded-full outline-none;
-        }
-        input[type=range]::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            @apply w-4 h-4 rounded-full bg-primary shadow-[0_0_10px_rgba(76,215,246,1)] cursor-pointer;
-        }
-    </style>
-<style>
-    body {
-      min-height: max(884px, 100dvh);
-    }
-  </style>
-  </head>
-<body class="bg-background text-on-surface min-h-screen pb-[100px] overflow-x-hidden selection:bg-primary/30 selection:text-primary">
-<!-- Ambient Background Effects -->
-<div class="fixed inset-0 pointer-events-none z-[-1] overflow-hidden">
-<div class="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-primary/10 rounded-full blur-[120px]" />
-<div class="absolute bottom-[-10%] right-[-10%] w-[60%] h-[60%] bg-secondary/5 rounded-full blur-[150px]" />
-</div>
-<!-- TopAppBar -->
-<header class="bg-background/80 dark:bg-background/80 backdrop-blur-md flex justify-between items-center px-margin-mobile h-16 w-full fixed top-0 z-50 border-b border-white/10">
-<div class="flex items-center gap-2 text-primary dark:text-primary-fixed-dim">
-<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">analytics</span>
-<span class="text-headline-md font-headline-md font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">ProphecyAI</span>
-</div>
-<button class="w-8 h-8 rounded-full bg-surface-variant overflow-hidden flex items-center justify-center border border-white/10 hover:opacity-80 transition-opacity active:scale-95 duration-150 text-on-surface-variant">
-<span class="material-symbols-outlined text-sm">person</span>
-</button>
+<!-- Geist font -->
+<link href="https://fonts.googleapis.com" rel="preconnect" />
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+<link href="/assets/cfb014fc4a227b9dffe7c39e5581d5f7.css" rel="stylesheet" />
+<script id="tailwind-noop">/* Tailwind v4 loaded via @tailwindcss/vite — no CDN script needed */</script>
+</head>
+
+<body class="text-on-surface pb-24 md:pb-0">
+<header class="hidden md:flex fixed top-0 w-full z-50 justify-between items-center px-container-padding-desktop h-16 bg-surface/80 backdrop-blur-xl border-b border-white/50 shadow-sm">
+  <div class="flex items-center gap-2">
+    <span class="material-symbols-outlined text-primary" data-icon="analytics">analytics</span>
+    <span class="font-display-lg text-display-lg font-bold text-primary">ProphecyAI</span>
+  </div>
+  <nav class="flex gap-6">
+    <a class="font-label-md text-label-md text-primary hover:bg-white/20 transition-colors px-3 py-2 rounded-md" href="#">Insight</a>
+    <a class="font-label-md text-label-md text-on-surface-variant hover:bg-white/20 transition-colors px-3 py-2 rounded-md" href="#">Forecast</a>
+    <a class="font-label-md text-label-md text-on-surface-variant hover:bg-white/20 transition-colors px-3 py-2 rounded-md" href="#">Assets</a>
+    <a class="font-label-md text-label-md text-on-surface-variant hover:bg-white/20 transition-colors px-3 py-2 rounded-md" href="#">Settings</a>
+  </nav>
+  <div class="w-8 h-8 rounded-full bg-surface-container-high flex items-center justify-center text-primary font-bold">R</div>
 </header>
-<main class="pt-24 px-margin-mobile flex flex-col gap-6 md:hidden">
-<!-- Predictor Controls -->
-<section class="glass-panel p-md flex flex-col gap-lg">
-<h2 class="text-headline-lg-mobile font-headline-lg-mobile text-on-surface">Predictor Controls</h2>
-<div class="flex flex-col gap-sm">
-<div class="flex justify-between items-center text-label-md font-label-md text-on-surface-variant">
-<span>Property Size (Sq. Ft.)</span>
-<span class="text-on-surface font-semibold">Value: 1,850</span>
-</div>
-<div class="relative w-full h-1 bg-white/20 rounded-full mt-2 mb-1">
-<div class="absolute top-0 left-0 h-full bg-gradient-to-r from-primary to-secondary rounded-full" style="width: 40%;" />
-<div class="absolute top-1/2 -translate-y-1/2 w-4 h-4 rounded-full bg-primary shadow-[0_0_10px_rgba(76,215,246,1)] border-2 border-background cursor-pointer" style="left: 40%;" />
-</div>
-<div class="flex justify-between text-xs text-on-surface-variant/60 font-label-sm">
-<span>500</span>
-<span>500-4000</span>
-</div>
-</div>
-<div class="flex flex-col gap-sm">
-<div class="flex justify-between items-center text-label-md font-label-md text-on-surface-variant">
-<span>Bedrooms</span>
-<span class="text-on-surface font-semibold">Value: 3</span>
-</div>
-<div class="relative w-full h-1 bg-white/20 rounded-full mt-2 mb-1">
-<div class="absolute top-0 left-0 h-full bg-gradient-to-r from-primary to-secondary rounded-full" style="width: 50%;" />
-<div class="absolute top-1/2 -translate-y-1/2 w-4 h-4 rounded-full bg-primary shadow-[0_0_10px_rgba(76,215,246,1)] border-2 border-background cursor-pointer" style="left: 50%;" />
-</div>
-<div class="flex justify-between text-xs text-on-surface-variant/60 font-label-sm">
-<span>1</span>
-<span>1-6</span>
-</div>
-</div>
-<div class="flex flex-col gap-sm">
-<div class="flex justify-between items-center text-label-md font-label-md text-on-surface-variant">
-<span>Bathrooms</span>
-<span class="text-on-surface font-semibold">Value: 2</span>
-</div>
-<div class="relative w-full h-1 bg-white/20 rounded-full mt-2 mb-1">
-<div class="absolute top-0 left-0 h-full bg-gradient-to-r from-primary to-secondary rounded-full" style="width: 40%;" />
-<div class="absolute top-1/2 -translate-y-1/2 w-4 h-4 rounded-full bg-primary shadow-[0_0_10px_rgba(76,215,246,1)] border-2 border-background cursor-pointer" style="left: 40%;" />
-</div>
-<div class="flex justify-between text-xs text-on-surface-variant/60 font-label-sm">
-<span>1</span>
-<span>1-5</span>
-</div>
-</div>
-<div class="flex gap-4">
-<div class="flex-1 flex flex-col gap-2">
-<label class="text-label-md font-label-md text-on-surface-variant">Year Built</label>
-<input class="glass-input w-full px-3 py-2 text-label-md font-label-md" type="text" value="2015" />
-</div>
-<div class="flex-1 flex flex-col gap-2">
-<label class="text-label-md font-label-md text-on-surface-variant">Location Score</label>
-<div class="relative">
-<input class="glass-input w-full px-3 py-2 text-label-md font-label-md text-primary bg-primary/10 border-primary/50" type="text" value="4.2/5" />
-<span class="material-symbols-outlined absolute right-2 top-1/2 -translate-y-1/2 text-primary text-sm" style="font-variation-settings: 'FILL' 1;">check</span>
-</div>
-</div>
-</div>
-<button class="primary-gradient-btn w-full py-4 mt-2">
-                PREDICT PRICE
-            </button>
-</section>
-<!-- Prediction Overview Header -->
-<h2 class="text-headline-lg-mobile font-headline-lg-mobile text-on-surface mt-2">Prediction Overview</h2>
-<!-- Result Section -->
-<section class="glass-panel p-md flex flex-col items-center justify-center gap-4 text-center bg-gradient-to-b from-primary/10 to-transparent border-primary/30 relative overflow-hidden">
-<div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-primary to-transparent opacity-50" />
-<p class="text-label-md font-label-md text-on-surface-variant uppercase tracking-wider">Estimated House Price</p>
-<h1 class="text-display-lg-mobile font-display-lg-mobile text-primary text-glow font-bold">
-                ₹ 185.70 Lakhs
-            </h1>
-<div class="w-full flex justify-between items-end mt-4 pt-4 border-t border-white/10">
-<span class="text-[10px] text-on-surface-variant/60">Based on modern ML model</span>
-<span class="text-[10px] text-on-surface-variant/60">Updated: 2 Minutes Ago</span>
-</div>
-</section>
-<!-- Insights Chart -->
-<section class="glass-panel p-md flex flex-col gap-6">
-<h3 class="text-headline-md font-headline-md text-on-surface">Model Insights &amp; Feature Coefficients</h3>
-<div class="h-48 w-full flex items-end justify-between gap-2 pt-6 relative">
-<!-- Chart Bars -->
-<div class="flex-1 flex flex-col items-center gap-2 group">
-<span class="text-label-sm font-label-sm text-on-surface-variant opacity-0 group-hover:opacity-100 transition-opacity absolute -top-4">1.80</span>
-<div class="w-full bg-gradient-to-b from-primary to-secondary rounded-t-sm relative shadow-[0_0_10px_rgba(6,182,212,0.3)]" style="height: 100%;" />
-<span class="text-[10px] text-on-surface-variant/80">Size</span>
-</div>
-<div class="flex-1 flex flex-col items-center gap-2 group">
-<span class="text-label-sm font-label-sm text-on-surface-variant opacity-0 group-hover:opacity-100 transition-opacity absolute -top-4">0.95</span>
-<div class="w-full bg-gradient-to-b from-primary to-secondary rounded-t-sm relative shadow-[0_0_10px_rgba(6,182,212,0.3)]" style="height: 50%;" />
-<span class="text-[10px] text-on-surface-variant/80">Beds</span>
-</div>
-<div class="flex-1 flex flex-col items-center gap-2 group">
-<span class="text-label-sm font-label-sm text-on-surface-variant opacity-0 group-hover:opacity-100 transition-opacity absolute -top-4">1.10</span>
-<div class="w-full bg-gradient-to-b from-primary to-secondary rounded-t-sm relative shadow-[0_0_10px_rgba(6,182,212,0.3)]" style="height: 60%;" />
-<span class="text-[10px] text-on-surface-variant/80">Baths</span>
-</div>
-<div class="flex-1 flex flex-col items-center gap-2 group">
-<span class="text-label-sm font-label-sm text-on-surface-variant opacity-0 group-hover:opacity-100 transition-opacity absolute -top-4">1.65</span>
-<div class="w-full bg-gradient-to-b from-primary to-secondary rounded-t-sm relative shadow-[0_0_10px_rgba(6,182,212,0.3)]" style="height: 90%;" />
-<span class="text-[10px] text-on-surface-variant/80">Location</span>
-</div>
-<div class="flex-1 flex flex-col items-center gap-2 group">
-<span class="text-label-sm font-label-sm text-on-surface-variant opacity-0 group-hover:opacity-100 transition-opacity absolute -top-4">0.75</span>
-<div class="w-full bg-gradient-to-b from-primary to-secondary rounded-t-sm relative shadow-[0_0_10px_rgba(6,182,212,0.3)]" style="height: 40%;" />
-<span class="text-[10px] text-on-surface-variant/80">Year</span>
-</div>
-<div class="flex-1 flex flex-col items-center gap-2 group">
-<span class="text-label-sm font-label-sm text-on-surface-variant opacity-0 group-hover:opacity-100 transition-opacity absolute -top-4">1.30</span>
-<div class="w-full bg-gradient-to-b from-primary to-secondary rounded-t-sm relative shadow-[0_0_10px_rgba(6,182,212,0.3)]" style="height: 70%;" />
-<span class="text-[10px] text-on-surface-variant/80">Amen.</span>
-</div>
-<!-- Baseline -->
-<div class="absolute bottom-6 left-0 right-0 h-[1px] bg-white/10 z-0" />
-</div>
-</section>
+<header class="md:hidden fixed top-0 w-full z-50 flex justify-between items-center px-container-padding-mobile h-16 bg-surface/80 backdrop-blur-xl border-b border-white/50 shadow-sm">
+  <div class="flex items-center gap-2">
+    <span class="material-symbols-outlined text-primary" data-icon="analytics">analytics</span>
+    <span class="font-headline-md text-headline-md font-bold text-primary">ProphecyAI</span>
+  </div>
+  <div class="w-8 h-8 rounded-full bg-surface-container-high flex items-center justify-center text-primary font-bold">R</div>
+</header>
+
+<main class="pt-20 md:pt-24 px-container-padding-mobile md:px-container-padding-desktop max-w-7xl mx-auto flex flex-col gap-panel-gap">
+  <div class="mb-2">
+    <h1 class="font-headline-lg text-headline-lg text-on-surface">Property Valuation Model</h1>
+    <p class="font-body-md text-body-md text-on-surface-variant mt-2 max-w-2xl">Adjust parameters to generate a real-time predictive valuation based on current market analytics.</p>
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-12 gap-6">
+    <div class="col-span-1 md:col-span-5 flex flex-col gap-6">
+      <div class="glass-panel rounded-xl p-6 flex flex-col gap-6">
+
+        <div>
+          <div class="flex justify-between items-center mb-2">
+            <label class="font-label-md text-label-md text-on-surface">Property Size (sq ft)</label>
+            <div id="val-size" class="font-label-md text-label-md bg-surface-container-low px-2 py-1 rounded text-on-surface-variant">1,850 sq ft</div>
+          </div>
+          <input id="slider-size" class="w-full" max="5000" min="500" type="range" value="1850" />
+          <div class="flex justify-between font-label-sm text-label-sm text-on-surface-variant mt-1"><span>500</span><span>5000+</span></div>
+        </div>
+
+        <div>
+          <div class="flex justify-between items-center mb-2">
+            <label class="font-label-md text-label-md text-on-surface">Number of Bedrooms</label>
+            <div id="val-bedrooms" class="font-label-md text-label-md bg-surface-container-low px-3 py-1 rounded text-on-surface-variant">3</div>
+          </div>
+          <input id="slider-bedrooms" class="w-full" max="6" min="1" type="range" value="3" />
+          <div class="flex justify-between font-label-sm text-label-sm text-on-surface-variant mt-1"><span>1</span><span>6+</span></div>
+        </div>
+
+        <div>
+          <div class="flex justify-between items-center mb-2">
+            <label class="font-label-md text-label-md text-on-surface">Number of Bathrooms</label>
+            <div id="val-bathrooms" class="font-label-md text-label-md bg-surface-container-low px-3 py-1 rounded text-on-surface-variant">2.5</div>
+          </div>
+          <input id="slider-bathrooms" class="w-full" max="5" min="1" step="0.5" type="range" value="2.5" />
+          <div class="flex justify-between font-label-sm text-label-sm text-on-surface-variant mt-1"><span>1</span><span>5+</span></div>
+        </div>
+
+        <div>
+          <div class="flex justify-between items-center mb-2">
+            <label class="font-label-md text-label-md text-on-surface">Property Age (years)</label>
+            <div id="val-age" class="font-label-md text-label-md bg-surface-container-low px-2 py-1 rounded text-on-surface-variant">8 years</div>
+          </div>
+          <input id="slider-age" class="w-full" max="50" min="0" type="range" value="8" />
+          <div class="flex justify-between font-label-sm text-label-sm text-on-surface-variant mt-1"><span>0</span><span>50+</span></div>
+        </div>
+
+        <div>
+          <div class="flex justify-between items-center mb-2">
+            <label class="font-label-md text-label-md text-on-surface">Location Score (1–10)</label>
+            <div id="val-location" class="font-label-md text-label-md bg-surface-container-low px-3 py-1 rounded text-on-surface-variant">8.2</div>
+          </div>
+          <input id="slider-location" class="w-full" max="10" min="1" step="0.1" type="range" value="8.2" />
+          <div class="flex justify-between font-label-sm text-label-sm text-on-surface-variant mt-1"><span>1</span><span>10</span></div>
+        </div>
+
+        <button id="predict-btn" class="w-full bg-primary-container text-on-primary font-label-md text-label-md py-4 rounded-xl mt-2 hover:bg-primary transition-colors flex justify-center items-center gap-2 shadow-sm">
+          <span class="material-symbols-outlined" data-icon="calculate">calculate</span>
+          Calculate Valuation
+        </button>
+        <p id="error-msg" class="text-red-600 font-label-sm text-label-sm text-center hidden">Unable to reach the prediction API. Is the backend running?</p>
+      </div>
+    </div>
+
+    <div class="col-span-1 md:col-span-7 flex flex-col gap-6">
+      <div class="glass-panel rounded-xl p-8 flex flex-col items-center justify-center min-h-[240px] relative overflow-hidden">
+        <div class="absolute top-0 right-0 w-64 h-64 bg-primary-fixed/20 rounded-full blur-3xl -translate-y-1/2 translate-x-1/3 pointer-events-none"></div>
+        <span class="font-label-md text-label-md text-on-surface-variant mb-4 relative z-10">Estimated Market Value</span>
+        <div id="price-display" class="font-display-lg text-display-lg text-on-surface font-semibold mb-4 flex items-baseline gap-2 relative z-10 price-animate">
+          <span class="text-3xl text-on-surface-variant font-medium">₹</span>
+          <span id="price-value">185.70</span>
+          <span class="text-3xl text-on-surface-variant font-medium">Lakhs</span>
+        </div>
+        <div id="trend-badge" class="flex items-center gap-2 bg-emerald-50 text-emerald-700 px-3 py-1.5 rounded-full border border-emerald-100 relative z-10">
+          <span class="material-symbols-outlined text-sm" data-icon="trending_up">trending_up</span>
+          <span id="trend-text" class="font-label-sm text-label-sm">AI-powered estimate</span>
+        </div>
+      </div>
+
+      <div class="glass-panel rounded-xl p-6 flex flex-col">
+        <h3 class="font-headline-md text-headline-md text-on-surface mb-6">Feature Importance</h3>
+        <div class="flex-grow flex items-end justify-between h-64 gap-2 md:gap-6 pt-8 relative">
+          <div class="absolute left-0 top-0 bottom-0 flex flex-col justify-between text-on-surface-variant font-label-sm text-label-sm pb-8 w-8">
+            <span>40%</span><span>30%</span><span>20%</span><span>10%</span><span>0%</span>
+          </div>
+          <div class="absolute left-8 right-0 top-0 bottom-8 flex flex-col justify-between pointer-events-none">
+            <div class="w-full border-t border-outline-variant/30"></div>
+            <div class="w-full border-t border-outline-variant/30"></div>
+            <div class="w-full border-t border-outline-variant/30"></div>
+            <div class="w-full border-t border-outline-variant/30"></div>
+            <div class="w-full border-t border-outline-variant/30"></div>
+          </div>
+          <div class="w-8"></div>
+          <div class="flex flex-col items-center flex-1 z-10">
+            <span id="pct-size" class="font-label-sm text-label-sm text-on-surface-variant mb-2">35%</span>
+            <div id="bar-size" class="w-full max-w-[48px] bg-primary-container rounded-t-sm bar-chart-col" style="height:87.5%"></div>
+            <span class="font-label-sm text-label-sm text-on-surface-variant mt-3 text-center truncate w-full px-1">Size</span>
+          </div>
+          <div class="flex flex-col items-center flex-1 z-10">
+            <span id="pct-location" class="font-label-sm text-label-sm text-on-surface-variant mb-2">25%</span>
+            <div id="bar-location" class="w-full max-w-[48px] bg-primary-container/80 rounded-t-sm bar-chart-col" style="height:62.5%"></div>
+            <span class="font-label-sm text-label-sm text-on-surface-variant mt-3 text-center truncate w-full px-1">Location</span>
+          </div>
+          <div class="flex flex-col items-center flex-1 z-10">
+            <span id="pct-bedrooms" class="font-label-sm text-label-sm text-on-surface-variant mb-2">15%</span>
+            <div id="bar-bedrooms" class="w-full max-w-[48px] bg-primary-container/60 rounded-t-sm bar-chart-col" style="height:37.5%"></div>
+            <span class="font-label-sm text-label-sm text-on-surface-variant mt-3 text-center truncate w-full px-1">Bedrooms</span>
+          </div>
+          <div class="flex flex-col items-center flex-1 z-10">
+            <span id="pct-bathrooms" class="font-label-sm text-label-sm text-on-surface-variant mb-2">12%</span>
+            <div id="bar-bathrooms" class="w-full max-w-[48px] bg-primary-container/50 rounded-t-sm bar-chart-col" style="height:30%"></div>
+            <span class="font-label-sm text-label-sm text-on-surface-variant mt-3 text-center truncate w-full px-1">Bathrooms</span>
+          </div>
+          <div class="flex flex-col items-center flex-1 z-10">
+            <span id="pct-age" class="font-label-sm text-label-sm text-on-surface-variant mb-2">10%</span>
+            <div id="bar-age" class="w-full max-w-[48px] bg-primary-container/40 rounded-t-sm bar-chart-col" style="height:25%"></div>
+            <span class="font-label-sm text-label-sm text-on-surface-variant mt-3 text-center truncate w-full px-1">Age</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </main>
-<!-- BottomNavBar -->
-<nav class="md:hidden bg-white/10 dark:bg-white/10 backdrop-blur-xl border border-white/20 shadow-[0_0_20px_rgba(0,0,0,0.3)] fixed bottom-6 left-0 right-0 z-50 flex justify-around items-center h-16 px-4 rounded-full mx-margin-mobile w-[calc(100%-40px)]">
-<button class="flex flex-col items-center justify-center bg-primary/20 text-primary rounded-full p-3 shadow-[0_0_15px_rgba(76,215,246,0.4)] hover:bg-white/5 transition-all active:scale-90 duration-200">
-<span class="material-symbols-outlined text-primary dark:text-primary-fixed-dim" style="font-variation-settings: 'FILL' 1;">home</span>
-</button>
-<button class="flex flex-col items-center justify-center text-on-surface-variant/60 p-3 hover:bg-white/5 transition-all active:scale-90 duration-200">
-<span class="material-symbols-outlined text-on-surface-variant dark:text-on-surface-variant">bed</span>
-</button>
-<button class="flex flex-col items-center justify-center text-on-surface-variant/60 p-3 hover:bg-white/5 transition-all active:scale-90 duration-200">
-<span class="material-symbols-outlined text-on-surface-variant dark:text-on-surface-variant">bathtub</span>
-</button>
-<button class="flex flex-col items-center justify-center text-on-surface-variant/60 p-3 hover:bg-white/5 transition-all active:scale-90 duration-200">
-<span class="material-symbols-outlined text-on-surface-variant dark:text-on-surface-variant">bar_chart</span>
-</button>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant px-4 py-1 hover:text-primary transition-all active:scale-90" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="domain">domain</span>
+<span class="font-label-md text-label-md">Assets</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant px-4 py-1 hover:text-primary transition-all active:scale-90" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="settings">settings</span>
+<span class="font-label-md text-label-md">Settings</span>
+</a>
 </nav>
-<!-- Desktop View Placeholder (If accessed on larger screens) -->
-<div class="hidden md:flex min-h-screen items-center justify-center text-on-surface-variant p-margin-desktop text-center">
-<div class="glass-panel p-xl max-w-2xl flex flex-col items-center gap-6">
-<span class="material-symbols-outlined text-[64px] text-primary" style="font-variation-settings: 'FILL' 1;">devices</span>
-<h2 class="text-headline-lg font-headline-lg text-on-surface">Mobile View Recommended</h2>
-<p class="text-body-lg font-body-lg">This single-page dashboard is optimized for mobile screens. Please resize your browser window or view on a mobile device for the intended experience.</p>
-</div>
-</div>
 </body></html>

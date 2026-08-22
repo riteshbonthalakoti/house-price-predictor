@@ -1,0 +1,178 @@
+@import "tailwindcss";
+
+/* ── Design Tokens (Stitch theme) ─────────────────────────────────────── */
+@theme {
+  /* Colors */
+  --color-on-background: #191c1e;
+  --color-surface-bright: #f7f9fc;
+  --color-outline: #777585;
+  --color-on-primary-container: #e7e4ff;
+  --color-tertiary-fixed: #ffdcc6;
+  --color-inverse-on-surface: #eff1f4;
+  --color-secondary-fixed: #e2e2ec;
+  --color-on-secondary-container: #62646c;
+  --color-on-primary-fixed: #0c006a;
+  --color-on-error-container: #93000a;
+  --color-on-secondary-fixed-variant: #45464e;
+  --color-tertiary-container: #a25100;
+  --color-on-primary: #ffffff;
+  --color-error: #ba1a1a;
+  --color-error-container: #ffdad6;
+  --color-surface-tint: #4f4ccd;
+  --color-surface-container-high: #e6e8eb;
+  --color-on-surface: #191c1e;
+  --color-on-tertiary-container: #ffe1cf;
+  --color-secondary: #5c5e66;
+  --color-primary-container: #5856d6;
+  --color-surface-container-highest: #e0e3e6;
+  --color-inverse-primary: #c2c1ff;
+  --color-surface-dim: #d8dadd;
+  --color-outline-variant: #c7c4d6;
+  --color-background: #f7f9fc;
+  --color-primary-fixed-dim: #c2c1ff;
+  --color-on-primary-fixed-variant: #3631b4;
+  --color-tertiary: #7e3e00;
+  --color-secondary-container: #e2e2ec;
+  --color-primary: #3f3bbd;
+  --color-surface-variant: #e0e3e6;
+  --color-surface-container-lowest: #ffffff;
+  --color-primary-fixed: #e2dfff;
+  --color-on-secondary: #ffffff;
+  --color-inverse-surface: #2d3133;
+  --color-on-tertiary: #ffffff;
+  --color-on-error: #ffffff;
+  --color-surface-container-low: #f2f4f7;
+  --color-surface: #f7f9fc;
+  --color-on-tertiary-fixed-variant: #713700;
+  --color-secondary-fixed-dim: #c5c6cf;
+  --color-tertiary-fixed-dim: #ffb785;
+  --color-on-surface-variant: #464554;
+  --color-surface-container: #eceef1;
+  --color-on-secondary-fixed: #191b22;
+  --color-on-tertiary-fixed: #301400;
+
+  /* Spacing */
+  --spacing-container-padding-desktop: 40px;
+  --spacing-gutter: 24px;
+  --spacing-container-padding-mobile: 20px;
+  --spacing-panel-gap: 16px;
+
+  /* Border radius */
+  --radius-DEFAULT: 0.25rem;
+  --radius-lg: 0.5rem;
+  --radius-xl: 0.75rem;
+  --radius-full: 9999px;
+
+  /* Font families */
+  --font-family-sans: "Geist", sans-serif;
+
+  /* Font sizes */
+  --font-size-display-lg: 48px;
+  --font-size-headline-lg: 32px;
+  --font-size-headline-md: 24px;
+  --font-size-body-lg: 18px;
+  --font-size-body-md: 16px;
+  --font-size-label-md: 14px;
+  --font-size-label-sm: 12px;
+}
+
+/* ── Base ─────────────────────────────────────────────────────────────── */
+body {
+  background-color: #f7f9fc;
+  -webkit-font-smoothing: antialiased;
+  font-family: "Geist", sans-serif;
+  min-height: max(884px, 100dvh);
+}
+
+/* ── Glassmorphism ────────────────────────────────────────────────────── */
+.glass-panel {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+}
+
+/* ── Range Slider ─────────────────────────────────────────────────────── */
+input[type="range"] {
+  -webkit-appearance: none;
+  width: 100%;
+  background: transparent;
+}
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  height: 20px;
+  width: 20px;
+  border-radius: 50%;
+  background: #ffffff;
+  border: 2px solid #5856d6;
+  cursor: pointer;
+  margin-top: -8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+input[type="range"]::-webkit-slider-runnable-track {
+  width: 100%;
+  height: 4px;
+  cursor: pointer;
+  background: #e2e2ec;
+  border-radius: 2px;
+}
+input[type="range"]:focus {
+  outline: none;
+}
+
+/* ── Bar chart ────────────────────────────────────────────────────────── */
+.bar-chart-col {
+  transition: height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ── Price reveal animation ───────────────────────────────────────────── */
+@keyframes price-reveal {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.price-animate {
+  animation: price-reveal 0.35s ease forwards;
+}
+
+/* ── Spinner ──────────────────────────────────────────────────────────── */
+.spinner {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ── Typography helpers ───────────────────────────────────────────────── */
+.text-display-lg  { font-size: 48px; line-height: 1.1; letter-spacing: -0.02em; font-weight: 600; }
+.text-headline-lg { font-size: 32px; line-height: 1.2; letter-spacing: -0.01em; font-weight: 600; }
+.text-headline-md { font-size: 24px; line-height: 1.3; font-weight: 500; }
+.text-body-md     { font-size: 16px; line-height: 1.5; font-weight: 400; }
+.text-label-md    { font-size: 14px; line-height: 1.4; letter-spacing: 0.02em; font-weight: 500; }
+.text-label-sm    { font-size: 12px; line-height: 1.2; font-weight: 600; }
+
+/* ── Spacing utilities (Stitch custom) ────────────────────────────────── */
+.px-container-padding-desktop { padding-left: 40px; padding-right: 40px; }
+.px-container-padding-mobile  { padding-left: 20px; padding-right: 20px; }
+.px-gutter                    { padding-left: 24px; padding-right: 24px; }
+.gap-panel-gap                { gap: 16px; }
+.pb-safe                      { padding-bottom: env(safe-area-inset-bottom, 0px); }
+
+/* ── Color utilities most used by Stitch output ───────────────────────── */
+.bg-surface            { background-color: #f7f9fc; }
+.bg-primary            { background-color: #3f3bbd; }
+.bg-primary-container  { background-color: #5856d6; }
+.bg-primary-fixed      { background-color: #e2dfff; }
+.bg-surface-container-low  { background-color: #f2f4f7; }
+.bg-surface-container-high { background-color: #e6e8eb; }
+.text-primary              { color: #3f3bbd; }
+.text-on-primary           { color: #ffffff; }
+.text-on-surface           { color: #191c1e; }
+.text-on-surface-variant   { color: #464554; }
+.border-outline-variant    { border-color: #c7c4d6; }

@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ProphecyAI — Property Valuation Model</title>
+  <meta name="description" content="AI-powered real estate price prediction. Adjust property parameters and get an instant market valuation." />
+
+  <!-- Google Fonts: Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <!-- Material Symbols -->
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:          #F5F7FA;
+      --surface:     rgba(255,255,255,0.72);
+      --border:      rgba(255,255,255,0.55);
+      --shadow:      0 4px 24px rgba(0,0,0,0.06), 0 1px 4px rgba(0,0,0,0.04);
+      --primary:     #4F46E5;
+      --primary-h:   #4338CA;
+      --primary-bg:  #EEF2FF;
+      --text:        #1A1A2E;
+      --text-muted:  #6B7280;
+      --label-bg:    #F0F1F5;
+      --accent-g:    #059669;
+      --accent-r:    #DC2626;
+      --radius-lg:   16px;
+      --radius-md:   10px;
+      --radius-sm:    6px;
+    }
+
+    html, body {
+      height: 100%;
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── Layout ─────────────────────────────────────────────────────── */
+    .app-header {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      height: 60px;
+      background: rgba(245,247,250,0.85);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 40px;
+    }
+    .logo { display: flex; align-items: center; gap: 8px; font-size: 18px; font-weight: 700; color: var(--primary); text-decoration: none; }
+    .logo .material-symbols-outlined { font-size: 22px; }
+    .nav { display: flex; gap: 4px; }
+    .nav a {
+      font-size: 13px; font-weight: 500; color: var(--text-muted);
+      padding: 6px 14px; border-radius: var(--radius-sm);
+      text-decoration: none; transition: background 0.15s, color 0.15s;
+    }
+    .nav a.active, .nav a:hover { background: var(--primary-bg); color: var(--primary); }
+    .avatar {
+      width: 32px; height: 32px; border-radius: 50%;
+      background: var(--primary); color: #fff;
+      font-size: 13px; font-weight: 700;
+      display: flex; align-items: center; justify-content: center;
+    }
+
+    main {
+      max-width: 1200px; margin: 0 auto;
+      padding: 84px 40px 40px;
+    }
+
+    .page-title { font-size: 26px; font-weight: 700; color: var(--text); }
+    .page-sub   { font-size: 14px; color: var(--text-muted); margin-top: 6px; max-width: 520px; line-height: 1.6; }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 420px 1fr;
+      gap: 20px;
+      margin-top: 24px;
+    }
+
+    /* ── Glass card ─────────────────────────────────────────────────── */
+    .card {
+      background: var(--surface);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow);
+      padding: 28px;
+    }
+
+    /* ── Sliders ─────────────────────────────────────────────────────── */
+    .inputs { display: flex; flex-direction: column; gap: 22px; }
+
+    .slider-row label { font-size: 13px; font-weight: 600; color: var(--text); }
+
+    .slider-header {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 10px;
+    }
+    .slider-val {
+      font-size: 13px; font-weight: 600; color: var(--primary);
+      background: var(--primary-bg); padding: 3px 10px;
+      border-radius: var(--radius-sm);
+    }
+
+    input[type="range"] {
+      -webkit-appearance: none;
+      width: 100%; height: 4px;
+      background: #DDE1F0;
+      border-radius: 2px; outline: none; cursor: pointer;
+    }
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 20px; height: 20px;
+      border-radius: 50%;
+      background: #fff;
+      border: 2px solid var(--primary);
+      box-shadow: 0 2px 6px rgba(79,70,229,0.25);
+      cursor: pointer;
+    }
+    input[type="range"]::-moz-range-thumb {
+      width: 20px; height: 20px;
+      border-radius: 50%;
+      background: #fff;
+      border: 2px solid var(--primary);
+      box-shadow: 0 2px 6px rgba(79,70,229,0.25);
+      cursor: pointer;
+    }
+    .range-labels {
+      display: flex; justify-content: space-between;
+      font-size: 11px; color: var(--text-muted); margin-top: 4px;
+    }
+
+    /* ── Primary button ──────────────────────────────────────────────── */
+    .btn-predict {
+      margin-top: 8px;
+      width: 100%; padding: 14px;
+      background: var(--primary); color: #fff;
+      font-size: 14px; font-weight: 600; letter-spacing: 0.01em;
+      border: none; border-radius: var(--radius-md);
+      cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px;
+      transition: background 0.2s, transform 0.1s;
+    }
+    .btn-predict:hover  { background: var(--primary-h); }
+    .btn-predict:active { transform: scale(0.98); }
+    .btn-predict:disabled { opacity: 0.65; cursor: not-allowed; }
+
+    .error-msg { font-size: 12px; color: var(--accent-r); text-align: center; margin-top: 8px; display: none; }
+
+    /* ── Right column ────────────────────────────────────────────────── */
+    .right-col { display: flex; flex-direction: column; gap: 20px; }
+
+    /* Price card */
+    .price-card {
+      position: relative; overflow: hidden;
+      min-height: 210px;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      text-align: center;
+    }
+    .price-card::before {
+      content: ''; position: absolute;
+      top: -60px; right: -60px;
+      width: 220px; height: 220px;
+      background: radial-gradient(circle, rgba(79,70,229,0.1) 0%, transparent 70%);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+    .price-label { font-size: 12px; font-weight: 600; color: var(--text-muted); letter-spacing: 0.08em; text-transform: uppercase; }
+    .price-value {
+      font-size: 52px; font-weight: 700; color: var(--primary);
+      line-height: 1.1; margin: 10px 0;
+      display: flex; align-items: baseline; gap: 8px;
+    }
+    .price-currency { font-size: 28px; font-weight: 500; color: var(--text-muted); }
+    .price-unit     { font-size: 22px; font-weight: 500; color: var(--text-muted); }
+
+    .trend-badge {
+      display: inline-flex; align-items: center; gap: 5px;
+      padding: 5px 14px; border-radius: 999px;
+      font-size: 12px; font-weight: 600;
+      background: #ECFDF5; color: var(--accent-g);
+      border: 1px solid #A7F3D0;
+    }
+    .trend-badge.down { background: #FEF2F2; color: var(--accent-r); border-color: #FECACA; }
+    .trend-badge .material-symbols-outlined { font-size: 15px; }
+
+    /* ── Animations ──────────────────────────────────────────────────── */
+    @keyframes pop-in {
+      0%   { opacity: 0; transform: scale(0.92) translateY(6px); }
+      100% { opacity: 1; transform: scale(1) translateY(0); }
+    }
+    .animate-pop { animation: pop-in 0.3s cubic-bezier(0.34,1.56,0.64,1) both; }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .spinner {
+      width: 18px; height: 18px;
+      border: 2px solid rgba(255,255,255,0.35);
+      border-top-color: #fff; border-radius: 50%;
+      animation: spin 0.65s linear infinite;
+      display: inline-block;
+    }
+
+    /* ── Bar chart ────────────────────────────────────────────────────── */
+    .chart-card h3 { font-size: 15px; font-weight: 700; margin-bottom: 20px; }
+
+    .chart-area {
+      display: flex; align-items: flex-end; justify-content: space-around;
+      height: 160px; gap: 12px;
+    }
+    .bar-group {
+      flex: 1; display: flex; flex-direction: column; align-items: center; gap: 6px;
+    }
+    .bar-pct { font-size: 11px; font-weight: 700; color: var(--primary); }
+    .bar-fill {
+      width: 100%; max-width: 44px;
+      background: linear-gradient(180deg, var(--primary) 0%, rgba(79,70,229,0.5) 100%);
+      border-radius: 6px 6px 2px 2px;
+      transition: height 0.45s cubic-bezier(0.4,0,0.2,1);
+    }
+    .bar-name { font-size: 11px; color: var(--text-muted); font-weight: 500; text-align: center; }
+
+    /* ── Mobile nav ───────────────────────────────────────────────────── */
+    .mobile-nav {
+      display: none;
+      position: fixed; bottom: 0; left: 0; right: 0; z-index: 100;
+      background: rgba(245,247,250,0.92);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-top: 1px solid var(--border);
+      padding: 8px 20px 16px;
+      justify-content: space-around;
+    }
+    .mobile-nav a {
+      display: flex; flex-direction: column; align-items: center; gap: 2px;
+      color: var(--text-muted); text-decoration: none; font-size: 11px; font-weight: 500;
+    }
+    .mobile-nav a.active { color: var(--primary); }
+    .mobile-nav .material-symbols-outlined { font-size: 22px; }
+
+    /* ── Responsive ───────────────────────────────────────────────────── */
+    @media (max-width: 900px) {
+      .app-header { padding: 0 20px; }
+      .nav { display: none; }
+      main { padding: 76px 16px 90px; }
+      .grid { grid-template-columns: 1fr; }
+      .mobile-nav { display: flex; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="app-header">
+    <a class="logo" href="#">
+      <span class="material-symbols-outlined">analytics</span>
+      ProphecyAI
+    </a>
+    <nav class="nav">
+      <a href="#" class="active">Insight</a>
+      <a href="#">Forecast</a>
+      <a href="#">Assets</a>
+      <a href="#">Settings</a>
+    </nav>
+    <div class="avatar">R</div>
+  </header>
+
+  <main>
+    <h1 class="page-title">Property Valuation Model</h1>
+    <p class="page-sub">Adjust parameters to generate a real-time predictive valuation based on current market analytics.</p>
+
+    <div class="grid">
+
+      <!-- ── Left: Inputs ── -->
+      <div class="card">
+        <div class="inputs">
+
+          <!-- Size -->
+          <div class="slider-row">
+            <div class="slider-header">
+              <label>Property Size (sq ft)</label>
+              <span class="slider-val" id="val-size">1,850 sq ft</span>
+            </div>
+            <input type="range" id="slider-size" min="500" max="5000" value="1850" />
+            <div class="range-labels"><span>500</span><span>5000+</span></div>
+          </div>
+
+          <!-- Bedrooms -->
+          <div class="slider-row">
+            <div class="slider-header">
+              <label>Bedrooms</label>
+              <span class="slider-val" id="val-bedrooms">3</span>
+            </div>
+            <input type="range" id="slider-bedrooms" min="1" max="6" value="3" />
+            <div class="range-labels"><span>1</span><span>6+</span></div>
+          </div>
+
+          <!-- Bathrooms -->
+          <div class="slider-row">
+            <div class="slider-header">
+              <label>Bathrooms</label>
+              <span class="slider-val" id="val-bathrooms">2.5</span>
+            </div>
+            <input type="range" id="slider-bathrooms" min="1" max="5" step="0.5" value="2.5" />
+            <div class="range-labels"><span>1</span><span>5+</span></div>
+          </div>
+
+          <!-- Age -->
+          <div class="slider-row">
+            <div class="slider-header">
+              <label>Property Age (years)</label>
+              <span class="slider-val" id="val-age">8 yrs</span>
+            </div>
+            <input type="range" id="slider-age" min="0" max="50" value="8" />
+            <div class="range-labels"><span>0</span><span>50+</span></div>
+          </div>
+
+          <!-- Location Score -->
+          <div class="slider-row">
+            <div class="slider-header">
+              <label>Location Score (1–10)</label>
+              <span class="slider-val" id="val-location">8.2</span>
+            </div>
+            <input type="range" id="slider-location" min="1" max="10" step="0.1" value="8.2" />
+            <div class="range-labels"><span>1</span><span>10</span></div>
+          </div>
+
+          <button class="btn-predict" id="predict-btn">
+            <span class="material-symbols-outlined" style="font-size:18px">calculate</span>
+            Calculate Valuation
+          </button>
+          <p class="error-msg" id="error-msg">⚠ Cannot reach the API. Make sure the backend is running on port 8000.</p>
+
+        </div>
+      </div>
+
+      <!-- ── Right: Outputs ── -->
+      <div class="right-col">
+
+        <!-- Price display -->
+        <div class="card price-card">
+          <p class="price-label">Estimated Market Value</p>
+          <div class="price-value" id="price-display">
+            <span class="price-currency">₹</span>
+            <span id="price-number">—</span>
+            <span class="price-unit">Lakhs</span>
+          </div>
+          <div class="trend-badge" id="trend-badge">
+            <span class="material-symbols-outlined">trending_up</span>
+            <span id="trend-text">AI-powered estimate</span>
+          </div>
+        </div>
+
+        <!-- Feature importance -->
+        <div class="card chart-card">
+          <h3>Feature Importance</h3>
+          <div class="chart-area" id="chart-area">
+            <div class="bar-group">
+              <span class="bar-pct" id="pct-size">—</span>
+              <div class="bar-fill" id="bar-size" style="height:0px"></div>
+              <span class="bar-name">Size</span>
+            </div>
+            <div class="bar-group">
+              <span class="bar-pct" id="pct-location">—</span>
+              <div class="bar-fill" id="bar-location" style="height:0px"></div>
+              <span class="bar-name">Location</span>
+            </div>
+            <div class="bar-group">
+              <span class="bar-pct" id="pct-bedrooms">—</span>
+              <div class="bar-fill" id="bar-bedrooms" style="height:0px"></div>
+              <span class="bar-name">Bedrooms</span>
+            </div>
+            <div class="bar-group">
+              <span class="bar-pct" id="pct-bathrooms">—</span>
+              <div class="bar-fill" id="bar-bathrooms" style="height:0px"></div>
+              <span class="bar-name">Bathrooms</span>
+            </div>
+            <div class="bar-group">
+              <span class="bar-pct" id="pct-age">—</span>
+              <div class="bar-fill" id="bar-age" style="height:0px"></div>
+              <span class="bar-name">Age</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+  <!-- Mobile bottom nav -->
+  <nav class="mobile-nav">
+    <a href="#" class="active">
+      <span class="material-symbols-outlined">insights</span>Insight
+    </a>
+    <a href="#">
+      <span class="material-symbols-outlined">online_prediction</span>Forecast
+    </a>
+    <a href="#">
+      <span class="material-symbols-outlined">domain</span>Assets
+    </a>
+    <a href="#">
+      <span class="material-symbols-outlined">settings</span>Settings
+    </a>
+  </nav>
+
+  <script>
+    const API = 'https://ritesh1918-house-price-predictor.hf.space';
+    const CHART_MAX_PX = 130; // max bar height in pixels
+
+    // Slider live labels
+    const sliders = {
+      size:      { el: document.getElementById('slider-size'),     lbl: document.getElementById('val-size'),     fmt: v => `${Number(v).toLocaleString()} sq ft` },
+      bedrooms:  { el: document.getElementById('slider-bedrooms'),  lbl: document.getElementById('val-bedrooms'),  fmt: v => v },
+      bathrooms: { el: document.getElementById('slider-bathrooms'), lbl: document.getElementById('val-bathrooms'), fmt: v => v },
+      age:       { el: document.getElementById('slider-age'),       lbl: document.getElementById('val-age'),       fmt: v => `${v} yrs` },
+      location:  { el: document.getElementById('slider-location'),  lbl: document.getElementById('val-location'),  fmt: v => v },
+    };
+    Object.values(sliders).forEach(({ el, lbl, fmt }) => {
+      el.addEventListener('input', () => { lbl.textContent = fmt(el.value); });
+    });
+
+    const priceNum  = document.getElementById('price-number');
+    const priceBox  = document.getElementById('price-display');
+    const trendBadge= document.getElementById('trend-badge');
+    const trendText = document.getElementById('trend-text');
+    const predictBtn= document.getElementById('predict-btn');
+    const errorMsg  = document.getElementById('error-msg');
+
+    const bars = {
+      size_sqft:      { bar: document.getElementById('bar-size'),      pct: document.getElementById('pct-size') },
+      location_score: { bar: document.getElementById('bar-location'),  pct: document.getElementById('pct-location') },
+      bedrooms:       { bar: document.getElementById('bar-bedrooms'),  pct: document.getElementById('pct-bedrooms') },
+      bathrooms:      { bar: document.getElementById('bar-bathrooms'), pct: document.getElementById('pct-bathrooms') },
+      age_years:      { bar: document.getElementById('bar-age'),       pct: document.getElementById('pct-age') },
+    };
+
+    let prevPrice = null;
+
+    async function predict() {
+      errorMsg.style.display = 'none';
+      predictBtn.innerHTML = '<span class="spinner"></span>';
+      predictBtn.disabled = true;
+
+      const payload = {
+        size_sqft:      parseFloat(sliders.size.el.value),
+        bedrooms:       parseInt(sliders.bedrooms.el.value),
+        bathrooms:      parseFloat(sliders.bathrooms.el.value),
+        age_years:      parseInt(sliders.age.el.value),
+        location_score: parseFloat(sliders.location.el.value),
+      };
+
+      try {
+        const res  = await fetch(`${API}/predict`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+        });
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const data = await res.json();
+
+        // Animate price
+        priceBox.classList.remove('animate-pop');
+        void priceBox.offsetWidth;
+        priceBox.classList.add('animate-pop');
+        priceNum.textContent = data.predicted_price_lakhs.toFixed(2);
+
+        // Trend badge
+        if (prevPrice !== null) {
+          const diff = data.predicted_price_lakhs - prevPrice;
+          const pct  = Math.abs((diff / prevPrice) * 100).toFixed(1);
+          if (diff >= 0) {
+            trendBadge.className = 'trend-badge';
+            trendBadge.querySelector('.material-symbols-outlined').textContent = 'trending_up';
+            trendText.textContent = `+${pct}% from last estimate`;
+          } else {
+            trendBadge.className = 'trend-badge down';
+            trendBadge.querySelector('.material-symbols-outlined').textContent = 'trending_down';
+            trendText.textContent = `-${pct}% from last estimate`;
+          }
+        } else {
+          trendText.textContent = 'AI-powered estimate';
+        }
+        prevPrice = data.predicted_price_lakhs;
+
+        // Update bar chart
+        const fi     = data.feature_importance;
+        const maxVal = Math.max(...Object.values(fi));
+        Object.entries(bars).forEach(([key, { bar, pct }]) => {
+          const val = fi[key] ?? 0;
+          bar.style.height = `${Math.round((val / maxVal) * CHART_MAX_PX)}px`;
+          pct.textContent = `${Math.round(val * 100)}%`;
+        });
+
+      } catch (err) {
+        console.error(err);
+        errorMsg.style.display = 'block';
+      } finally {
+        predictBtn.innerHTML = '<span class="material-symbols-outlined" style="font-size:18px">calculate</span> Calculate Valuation';
+        predictBtn.disabled = false;
+      }
+    }
+
+    predictBtn.addEventListener('click', predict);
+    predict().catch(() => {});
+  </script>
+</body>
+</html>
