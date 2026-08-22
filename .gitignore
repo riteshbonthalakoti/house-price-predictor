@@ -1,0 +1,22 @@
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+ENV/
+env/
+.env
+node_modules/
+.ipynb_checkpoints
+*.pkl
+credentials.json
+token.json
+
+# Cache Folders
+.stitch-mcp/
+.wrangler/
+.astro/
+.cache/
+dist/
+build/
+scratch/
