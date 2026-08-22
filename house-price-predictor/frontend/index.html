@@ -219,7 +219,7 @@
     }
     .bar-pct { font-size: 11px; font-weight: 700; color: var(--primary); }
     .bar-fill {
-      width: 100%; max-width: 44px;
+      width: 28px;
       background: linear-gradient(180deg, var(--primary) 0%, rgba(79,70,229,0.5) 100%);
       border-radius: 6px 6px 2px 2px;
       transition: height 0.45s cubic-bezier(0.4,0,0.2,1);
@@ -283,52 +283,67 @@
 
           <!-- Size -->
           <div class="slider-row">
-            <div class="slider-header">
-              <label>Property Size (sq ft)</label>
+            <div class="slider-header" style="display: flex; justify-content: space-between; align-items: center;">
+              <div>
+                <label style="display: block; font-size: 13px; font-weight: 600; color: var(--text);">Size (sq. ft.)</label>
+                <span class="helper-text" style="font-size: 11px; color: var(--text-muted);">Total indoor living area</span>
+              </div>
               <span class="slider-val" id="val-size">1,850 sq ft</span>
             </div>
-            <input type="range" id="slider-size" min="500" max="5000" value="1850" />
-            <div class="range-labels"><span>500</span><span>5000+</span></div>
+            <input type="range" id="slider-size" min="500" max="4000" value="1850" />
+            <div class="range-labels"><span>500 sq ft</span><span>4,000 sq ft</span></div>
           </div>
 
           <!-- Bedrooms -->
           <div class="slider-row">
-            <div class="slider-header">
-              <label>Bedrooms</label>
+            <div class="slider-header" style="display: flex; justify-content: space-between; align-items: center;">
+              <div>
+                <label style="display: block; font-size: 13px; font-weight: 600; color: var(--text);">Bedrooms</label>
+                <span class="helper-text" style="font-size: 11px; color: var(--text-muted);">Number of private bedrooms</span>
+              </div>
               <span class="slider-val" id="val-bedrooms">3</span>
             </div>
-            <input type="range" id="slider-bedrooms" min="1" max="6" value="3" />
-            <div class="range-labels"><span>1</span><span>6+</span></div>
+            <input type="range" id="slider-bedrooms" min="1" max="6" step="1" value="3" />
+            <div class="range-labels"><span>1 Bed</span><span>6 Beds</span></div>
           </div>
 
           <!-- Bathrooms -->
           <div class="slider-row">
-            <div class="slider-header">
-              <label>Bathrooms</label>
-              <span class="slider-val" id="val-bathrooms">2.5</span>
+            <div class="slider-header" style="display: flex; justify-content: space-between; align-items: center;">
+              <div>
+                <label style="display: block; font-size: 13px; font-weight: 600; color: var(--text);">Bathrooms</label>
+                <span class="helper-text" style="font-size: 11px; color: var(--text-muted);">Number of full bathrooms</span>
+              </div>
+              <span class="slider-val" id="val-bathrooms">2</span>
             </div>
-            <input type="range" id="slider-bathrooms" min="1" max="5" step="0.5" value="2.5" />
-            <div class="range-labels"><span>1</span><span>5+</span></div>
+            <input type="range" id="slider-bathrooms" min="1" max="4" step="1" value="2" />
+            <div class="range-labels"><span>1 Bath</span><span>4 Baths</span></div>
           </div>
 
           <!-- Age -->
           <div class="slider-row">
-            <div class="slider-header">
-              <label>Property Age (years)</label>
+            <div class="slider-header" style="display: flex; justify-content: space-between; align-items: center;">
+              <div>
+                <label style="display: block; font-size: 13px; font-weight: 600; color: var(--text);">Property Age (years)</label>
+                <span class="helper-text" style="font-size: 11px; color: var(--text-muted);">0 = newly built</span>
+              </div>
               <span class="slider-val" id="val-age">8 yrs</span>
             </div>
-            <input type="range" id="slider-age" min="0" max="50" value="8" />
-            <div class="range-labels"><span>0</span><span>50+</span></div>
+            <input type="range" id="slider-age" min="0" max="40" value="8" />
+            <div class="range-labels"><span>0 (New)</span><span>40 yrs</span></div>
           </div>
 
           <!-- Location Score -->
           <div class="slider-row">
-            <div class="slider-header">
-              <label>Location Score (1–10)</label>
+            <div class="slider-header" style="display: flex; justify-content: space-between; align-items: center;">
+              <div>
+                <label style="display: block; font-size: 13px; font-weight: 600; color: var(--text);">Neighborhood Quality Score</label>
+                <span class="helper-text" style="font-size: 11px; color: var(--text-muted);">1 = Developing area, 10 = Prime location</span>
+              </div>
               <span class="slider-val" id="val-location">8.2</span>
             </div>
             <input type="range" id="slider-location" min="1" max="10" step="0.1" value="8.2" />
-            <div class="range-labels"><span>1</span><span>10</span></div>
+            <div class="range-labels"><span>1 (Developing)</span><span>10 (Prime)</span></div>
           </div>
 
           <button class="btn-predict" id="predict-btn">
@@ -498,6 +513,7 @@
 
         // Update bar chart
         const fi     = data.feature_importance;
+        console.log("Chart is receiving fresh data:", fi);
         const maxVal = Math.max(...Object.values(fi));
         Object.entries(bars).forEach(([key, { bar, pct }]) => {
           const val = fi[key] ?? 0;

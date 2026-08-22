@@ -2,10 +2,10 @@ from pydantic import BaseModel, Field
 
 
 class PredictRequest(BaseModel):
-    size_sqft: float = Field(..., ge=500, le=5000, description="Property size in square feet")
+    size_sqft: float = Field(..., ge=500, le=4000, description="Property size in square feet")
     bedrooms: int = Field(..., ge=1, le=6, description="Number of bedrooms")
-    bathrooms: float = Field(..., ge=1, le=5, description="Number of bathrooms")
-    age_years: int = Field(..., ge=0, le=50, description="Property age in years")
+    bathrooms: int = Field(..., ge=1, le=4, description="Number of bathrooms")
+    age_years: int = Field(..., ge=0, le=40, description="Property age in years")
     location_score: float = Field(..., ge=1, le=10, description="Location score (1-10)")
 
 
