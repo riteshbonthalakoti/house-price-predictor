@@ -355,6 +355,9 @@
             <span class="material-symbols-outlined">trending_up</span>
             <span id="trend-text">AI-powered estimate</span>
           </div>
+          <p class="wake-msg" id="wake-msg">
+            <span class="wake-dot"></span>Waking up backend&hellip; (~20s first time)
+          </p>
         </div>
 
         <!-- Feature importance -->
@@ -427,10 +430,12 @@
 
     const priceNum  = document.getElementById('price-number');
     const priceBox  = document.getElementById('price-display');
+    const priceCard = document.querySelector('.price-card');
     const trendBadge= document.getElementById('trend-badge');
     const trendText = document.getElementById('trend-text');
     const predictBtn= document.getElementById('predict-btn');
     const errorMsg  = document.getElementById('error-msg');
+    const wakeMsg   = document.getElementById('wake-msg');
 
     const bars = {
       size_sqft:      { bar: document.getElementById('bar-size'),      pct: document.getElementById('pct-size') },
@@ -442,10 +447,13 @@
 
     let prevPrice = null;
 
-    async function predict() {
+    async function predict(isInitial = false) {
       errorMsg.style.display = 'none';
       predictBtn.innerHTML = '<span class="spinner"></span>';
       predictBtn.disabled = true;
+      // Show skeleton + wake message on initial cold-start load
+      priceCard.classList.add('loading');
+      if (isInitial) wakeMsg.classList.add('visible');
 
       const payload = {
         size_sqft:      parseFloat(sliders.size.el.value),
@@ -501,13 +509,15 @@
         console.error(err);
         errorMsg.style.display = 'block';
       } finally {
+        priceCard.classList.remove('loading');
+        wakeMsg.classList.remove('visible');
         predictBtn.innerHTML = '<span class="material-symbols-outlined" style="font-size:18px">calculate</span> Calculate Valuation';
         predictBtn.disabled = false;
       }
     }
 
-    predictBtn.addEventListener('click', predict);
-    predict().catch(() => {});
+    predictBtn.addEventListener('click', () => predict(false));
+    predict(true).catch(() => {});  // initial auto-predict, show wake message
   </script>
 </body>
 </html>

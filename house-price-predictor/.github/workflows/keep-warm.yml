@@ -1,0 +1,25 @@
+name: Keep Render Backend Warm
+
+on:
+  # Runs every 10 minutes — keeps Render free tier awake
+  schedule:
+    - cron: '*/10 * * * *'
+  # Also manually triggerable from the Actions tab (good for pre-demo warm-up)
+  workflow_dispatch:
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping /health endpoint
+        run: |
+          echo "Pinging backend at $(date '+%Y-%m-%d %H:%M:%S UTC')"
+          STATUS=$(curl -s -o /dev/null -w "%{http_code}" \
+            --max-time 30 \
+            https://house-price-predictor-api-lq99.onrender.com/health)
+          echo "HTTP status: $STATUS"
+          if [ "$STATUS" = "200" ]; then
+            echo "✅ Backend is warm and healthy."
+          else
+            echo "⚠️  Unexpected status $STATUS — backend may be starting up."
+          fi
