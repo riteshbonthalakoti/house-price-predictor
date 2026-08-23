@@ -335,6 +335,122 @@
     #toggle-pres-btn:active {
       transform: translateY(0);
     }
+
+    /* ==========================================================================
+       9. MOBILE RESPONSIVE STYLES & TOUCH CONTROLS
+       ========================================================================== */
+    .mobile-pres-nav {
+      display: none;
+    }
+
+    @media (max-width: 768px) {
+      .normal-view-header {
+        margin: 20px auto 16px;
+        padding: 0 16px;
+        flex-direction: column;
+        gap: 8px;
+        text-align: center;
+      }
+
+      .slides-stack {
+        padding: 0 12px;
+        gap: 24px;
+        margin-bottom: 90px;
+      }
+
+      .slide {
+        padding: 32px 20px;
+        min-height: auto;
+        border-radius: 12px;
+      }
+
+      .slide-title {
+        font-size: 28px !important;
+        line-height: 1.25 !important;
+        margin-bottom: 12px !important;
+      }
+
+      .slide-subtitle {
+        font-size: 16px !important;
+        line-height: 1.4 !important;
+      }
+
+      .definition-box {
+        padding: 14px 16px !important;
+        margin-bottom: 20px !important;
+      }
+
+      .definition-text {
+        font-size: 17px !important;
+      }
+
+      .three-cards-grid,
+      .compare-grid {
+        grid-template-columns: 1fr !important;
+        gap: 14px !important;
+      }
+
+      .concept-card,
+      .compare-column {
+        padding: 20px 16px !important;
+      }
+
+      .concept-card-title {
+        font-size: 18px !important;
+      }
+
+      .concept-card-desc {
+        font-size: 15px !important;
+      }
+
+      .closing-banner {
+        padding: 16px 20px !important;
+        font-size: 16px !important;
+      }
+
+      body.is-presenting .slide {
+        padding: 40px 16px 90px !important;
+        overflow-y: auto !important;
+      }
+
+      .slide-counter {
+        bottom: 20px !important;
+        right: 16px !important;
+        font-size: 14px !important;
+        padding: 6px 14px !important;
+      }
+
+      #toggle-pres-btn {
+        bottom: 20px;
+        right: 16px;
+        padding: 12px 20px;
+        font-size: 14px;
+      }
+
+      body.is-presenting .mobile-pres-nav {
+        display: flex;
+        position: fixed;
+        bottom: 20px;
+        left: 16px;
+        gap: 10px;
+        z-index: 10002;
+      }
+
+      .mobile-pres-btn {
+        background: rgba(15, 23, 42, 0.85);
+        backdrop-filter: blur(8px);
+        color: #FFFFFF;
+        border: 1px solid var(--border);
+        border-radius: 999px;
+        padding: 8px 16px;
+        font-size: 14px;
+        font-weight: 700;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+    }
   </style>
 </head>
 <body>
@@ -568,6 +684,13 @@
   <!-- Slide Counter for Presentation Mode -->
   <div class="slide-counter" id="slide-counter">1 / 6</div>
 
+  <!-- Mobile Presentation Controls -->
+  <div class="mobile-pres-nav" id="mobile-pres-nav">
+    <button class="mobile-pres-btn" onclick="prevSlide()">‹ Prev</button>
+    <button class="mobile-pres-btn" onclick="nextSlide()">Next ›</button>
+    <button class="mobile-pres-btn" onclick="togglePresentationMode()" style="background: rgba(239, 68, 68, 0.9);">Exit</button>
+  </div>
+
   <!-- Visible Button in Normal Mode -->
   <button id="toggle-pres-btn" onclick="togglePresentationMode()">
     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -640,6 +763,29 @@
     function prevSlide() {
       if (currentSlide > 1) {
         goToSlide(currentSlide - 1);
+      }
+    }
+
+    // Touch Swipe Gesture Support for Mobile Devices
+    let touchStartX = 0;
+    let touchEndX = 0;
+
+    window.addEventListener('touchstart', (e) => {
+      touchStartX = e.changedTouches[0].screenX;
+    }, { passive: true });
+
+    window.addEventListener('touchend', (e) => {
+      touchEndX = e.changedTouches[0].screenX;
+      handleSwipe();
+    }, { passive: true });
+
+    function handleSwipe() {
+      if (!isPresenting) return;
+      const swipeDistance = touchEndX - touchStartX;
+      if (swipeDistance < -50) {
+        nextSlide(); // Swipe Left -> Next
+      } else if (swipeDistance > 50) {
+        prevSlide(); // Swipe Right -> Prev
       }
     }
 
