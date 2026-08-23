@@ -443,9 +443,7 @@
       errorMsg.style.display = 'none';
       predictBtn.innerHTML = '<span class="spinner"></span>';
       predictBtn.disabled = true;
-      // Show skeleton + wake message on initial cold-start load
       priceCard.classList.add('loading');
-      if (isInitial) wakeMsg.classList.add('visible');
 
       const payload = {
         size_sqft:      parseFloat(sliders.size.el.value),
@@ -456,13 +454,37 @@
       };
 
       try {
-        const res  = await fetch(`${API}/predict`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(payload),
-        });
-        if (!res.ok) throw new Error(`HTTP ${res.status}`);
-        const data = await res.json();
+        // Local Model Inference (Linear Regression)
+        const basePrice = 14.82; // Intercept
+        const coefs = {
+          size_sqft: 0.050,
+          bedrooms: 5.034,
+          bathrooms: 2.973,
+          age_years: -0.499,
+          location_score: 3.987
+        };
+
+        const predicted = 
+          basePrice +
+          (payload.size_sqft * coefs.size_sqft) +
+          (payload.bedrooms * coefs.bedrooms) +
+          (payload.bathrooms * coefs.bathrooms) +
+          (payload.age_years * coefs.age_years) +
+          (payload.location_score * coefs.location_score);
+
+        const data = {
+          predicted_price_lakhs: Math.max(0, predicted),
+          feature_importance: {
+            size_sqft: 0.0040,
+            bedrooms: 0.4013,
+            bathrooms: 0.2370,
+            age_years: 0.0398,
+            location_score: 0.3179
+          }
+        };
+
+        // Simulate fast network latency (150ms) for UI smoothness
+        await new Promise(r => setTimeout(r, 150));
 
         // Animate price
         priceBox.classList.remove('animate-pop');
@@ -489,8 +511,7 @@
         prevPrice = data.predicted_price_lakhs;
 
         // Update bar chart
-        const fi     = data.feature_importance;
-        console.log("Chart is receiving fresh data:", fi);
+        const fi = data.feature_importance;
         const maxVal = Math.max(...Object.values(fi));
         Object.entries(bars).forEach(([key, { bar, pct }]) => {
           const val = fi[key] ?? 0;
@@ -503,7 +524,6 @@
         errorMsg.style.display = 'block';
       } finally {
         priceCard.classList.remove('loading');
-        wakeMsg.classList.remove('visible');
         predictBtn.innerHTML = '<span class="material-symbols-outlined" style="font-size:18px">calculate</span> Calculate Valuation';
         predictBtn.disabled = false;
       }
